@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TIP 2026 – Tournoi International Poussins/Poussines | Comité du Var de Volley-Ball</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628; --navy2: #0f2040; --blue: #1a56db; --blue-light: #3b82f6;
+    --accent: #f59e0b; --fem: #e879a0; --masc: #3b82f6;
+    --surface: #131f35; --surface2: #1c2d4a; --border: rgba(255,255,255,0.08);
+    --text: #e2e8f0; --text-muted: #94a3b8;
+    --gold: #fbbf24; --silver: #94a3b8; --bronze: #cd7c45;
+    --green: #22c55e; --radius: 10px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--navy); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; overflow-x: hidden; }
+
+  /* HEADER */
+  header { background: linear-gradient(135deg, var(--navy2) 0%, #0d1e3a 60%, #1a1040 100%); border-bottom: 2px solid var(--accent); padding: 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 24px rgba(0,0,0,0.5); }
+  .header-inner { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; gap: 16px; padding: 10px 20px; }
+  .logo-badge { background: var(--accent); color: var(--navy); font-family: 'Bebas Neue',sans-serif; font-size: 22px; letter-spacing: 1px; padding: 6px 14px; border-radius: 6px; white-space: nowrap; flex-shrink: 0; }
+  .header-title h1 { font-family: 'Bebas Neue',sans-serif; font-size: clamp(18px,4vw,28px); letter-spacing: 2px; color: #fff; line-height: 1; }
+  .header-title p { font-size: 12px; color: var(--accent); letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; }
+  .admin-btn { margin-left: auto; background: rgba(255,255,255,0.08); border: 1px solid var(--border); color: var(--text-muted); font-size: 12px; padding: 7px 14px; border-radius: 6px; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+  .admin-btn:hover { background: rgba(255,255,255,0.15); color: #fff; }
+  .admin-btn.active { background: var(--green); color: #fff; border-color: var(--green); }
+
+  /* NAV */
+  .main-nav { background: var(--surface); border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; }
+  .main-nav::-webkit-scrollbar { display: none; }
+  .main-nav-inner { max-width: 1400px; margin: 0 auto; display: flex; padding: 0 12px; }
+  .tab-btn { font-family: 'Barlow Condensed',sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); background: none; border: none; border-bottom: 3px solid transparent; padding: 14px 16px 11px; cursor: pointer; white-space: nowrap; transition: all 0.2s; }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active { color: #fff; border-bottom-color: var(--accent); }
+  .tab-btn.fem.active { border-bottom-color: var(--fem); }
+  .tab-btn.masc.active { border-bottom-color: var(--masc); }
+
+  /* CONTENT */
+  .content { max-width: 1400px; margin: 0 auto; padding: 24px 16px 60px; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* HERO */
+  .hero { background: linear-gradient(135deg, #0f2040, #1a1040 40%, #0a1628); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px 24px; text-align: center; margin-bottom: 28px; position: relative; overflow: hidden; }
+  .hero::before { content: '🏐'; position: absolute; font-size: 180px; opacity: 0.04; top: -20px; right: -20px; }
+  .hero h2 { font-family: 'Bebas Neue',sans-serif; font-size: clamp(28px,6vw,52px); letter-spacing: 3px; color: #fff; }
+  .hero-sub { color: var(--accent); font-size: 14px; text-transform: uppercase; letter-spacing: 3px; margin-top: 6px; }
+  .status-banner { margin-top: 16px; display: inline-flex; align-items: center; gap: 8px; background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.3); border-radius: 20px; padding: 6px 16px; font-size: 13px; color: var(--accent); }
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  /* STATS */
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 28px; }
+  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; text-align: center; }
+  .stat-card .val { font-family: 'Bebas Neue',sans-serif; font-size: 40px; line-height: 1; }
+  .stat-card .lbl { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-top: 4px; }
+
+  /* SECTION HEADER */
+  .section-header { display: flex; align-items: center; gap: 12px; margin: 28px 0 16px; }
+  .section-header h2 { font-family: 'Barlow Condensed',sans-serif; font-size: 20px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #fff; }
+  .section-badge { background: var(--accent); color: var(--navy); font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; }
+  .section-badge.fem { background: var(--fem); color: #fff; }
+  .section-badge.masc { background: var(--masc); color: #fff; }
+  .section-badge.green { background: var(--green); color: #fff; }
+  .section-line { flex: 1; height: 1px; background: var(--border); }
+
+  /* POOLS GRID */
+  .pools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 16px; }
+  .pool-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .pool-header { padding: 12px 16px; display: flex; align-items: center; gap: 10px; background: var(--surface2); cursor: pointer; }
+  .pool-letter { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue',sans-serif; font-size: 18px; flex-shrink: 0; }
+  .pool-letter.m { background: rgba(59,130,246,0.2); color: var(--masc); }
+  .pool-letter.f { background: rgba(232,121,160,0.2); color: var(--fem); }
+  .pool-toggle { margin-left: auto; color: var(--text-muted); font-size: 12px; transition: transform 0.2s; }
+  .pool-card.open .pool-toggle { transform: rotate(180deg); }
+
+  .standings-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .standings-table th { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); font-weight: 600; padding: 8px 10px; text-align: center; border-bottom: 1px solid var(--border); }
+  .standings-table th:nth-child(2), .standings-table td:nth-child(2) { text-align: left; }
+  .standings-table td { padding: 9px 10px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .standings-table tr:last-child td { border-bottom: none; }
+  .standings-table .pts { font-weight: 700; color: var(--accent); }
+  .rank-1 td:nth-child(1) { border-left: 3px solid var(--gold); }
+  .rank-2 td:nth-child(1) { border-left: 3px solid var(--silver); }
+  .rank-3 td:nth-child(1) { border-left: 3px solid var(--bronze); }
+
+  .matches-section { padding: 0 12px 12px; }
+  .matches-toggle { font-size: 12px; color: var(--blue-light); cursor: pointer; padding: 6px 4px; background: none; border: none; display: flex; align-items: center; gap: 4px; }
+  .matches-list { display: none; margin-top: 6px; }
+  .matches-list.open { display: block; }
+  .match-row { display: flex; align-items: center; gap: 6px; padding: 5px 0; font-size: 12px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .match-row:last-child { border-bottom: none; }
+  .match-team { flex: 1; }
+  .match-team.winner { font-weight: 700; color: #fff; }
+  .match-score { font-family: 'Barlow Condensed',sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 1px; white-space: nowrap; color: var(--text-muted); }
+  .score-win { color: var(--accent); }
+  .match-pending { color: var(--text-muted); font-style: italic; font-size: 11px; }
+
+  /* ADMIN PANEL */
+  .admin-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 200; align-items: flex-start; justify-content: center; padding: 20px; overflow-y: auto; }
+  .admin-overlay.open { display: flex; }
+  .admin-modal { background: var(--navy2); border: 1px solid rgba(34,197,94,0.3); border-radius: 14px; width: 100%; max-width: 700px; padding: 0; overflow: hidden; margin: auto; }
+  .admin-header { background: rgba(34,197,94,0.1); border-bottom: 1px solid rgba(34,197,94,0.2); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; }
+  .admin-header h2 { font-family: 'Barlow Condensed',sans-serif; font-size: 20px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--green); }
+  .admin-close { background: none; border: none; color: var(--text-muted); font-size: 20px; cursor: pointer; }
+  .admin-body { padding: 24px; }
+  .admin-login { display: flex; flex-direction: column; gap: 12px; }
+  .admin-login input { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; color: var(--text); font-size: 14px; outline: none; transition: border-color 0.2s; }
+  .admin-login input:focus { border-color: var(--green); }
+  .admin-login .btn-login { background: var(--green); color: #fff; border: none; border-radius: 8px; padding: 12px; font-family: 'Barlow Condensed',sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: opacity 0.2s; }
+  .admin-login .btn-login:hover { opacity: 0.85; }
+  .admin-error { color: #ef4444; font-size: 13px; text-align: center; }
+
+  .admin-form { display: none; flex-direction: column; gap: 16px; }
+  .admin-form.visible { display: flex; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); font-weight: 600; }
+  .form-group select, .form-group input[type="number"], .form-group input[type="text"] { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; color: var(--text); font-size: 14px; outline: none; transition: border-color 0.2s; }
+  .form-group select:focus, .form-group input:focus { border-color: var(--green); }
+  .score-row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px; }
+  .score-sep { color: var(--text-muted); font-size: 20px; font-weight: 700; text-align: center; }
+  .score-input { text-align: center; font-family: 'Barlow Condensed',sans-serif; font-size: 20px; font-weight: 700; }
+  .btn-save { background: var(--green); color: #fff; border: none; border-radius: 8px; padding: 12px; font-family: 'Barlow Condensed',sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: opacity 0.2s; }
+  .btn-save:hover { opacity: 0.85; }
+  .admin-success { background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3); border-radius: 8px; padding: 12px; color: var(--green); font-size: 13px; text-align: center; display: none; }
+  .admin-success.show { display: block; }
+  .admin-logout { background: none; border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; color: var(--text-muted); font-size: 12px; cursor: pointer; margin-top: 8px; }
+  .admin-logout:hover { color: #fff; border-color: rgba(255,255,255,0.2); }
+
+  /* CLASSEMENT */
+  .classement-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 700px) { .classement-cols { grid-template-columns: 1fr; } }
+  .classement-block { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .classement-block-header { padding: 14px 18px; background: var(--surface2); display: flex; align-items: center; gap: 10px; font-family: 'Barlow Condensed',sans-serif; font-size: 15px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+  .rank-table { width: 100%; border-collapse: collapse; }
+  .rank-table td { padding: 9px 16px; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 13px; }
+  .rank-table tr:last-child td { border-bottom: none; }
+  .rank-num { font-family: 'Barlow Condensed',sans-serif; font-size: 17px; font-weight: 700; color: var(--text-muted); width: 36px; }
+  .rank-table tr:nth-child(1) .rank-num { color: var(--gold); }
+  .rank-table tr:nth-child(2) .rank-num { color: var(--silver); }
+  .rank-table tr:nth-child(3) .rank-num { color: var(--bronze); }
+  .empty-state { padding: 32px; text-align: center; color: var(--text-muted); font-size: 14px; }
+  .empty-icon { font-size: 36px; margin-bottom: 8px; }
+
+  /* FINALES */
+  .bracket-section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 14px; }
+  .bracket-title { padding: 12px 18px; background: var(--surface2); font-family: 'Barlow Condensed',sans-serif; font-size: 15px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; display: flex; align-items: center; gap: 10px; }
+  .bracket-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 1px; background: var(--border); }
+  .bracket-match { background: var(--surface); padding: 12px 14px; }
+  .bracket-match-num { font-size: 10px; color: var(--text-muted); letter-spacing: 1px; margin-bottom: 8px; }
+  .bracket-team { display: flex; align-items: center; justify-content: space-between; padding: 7px 10px; border-radius: 6px; margin-bottom: 4px; font-size: 13px; background: rgba(255,255,255,0.03); }
+  .bracket-team.winner { font-weight: 700; color: #fff; background: rgba(59,130,246,0.12); }
+  .bracket-team.winner.f { background: rgba(232,121,160,0.12); }
+  .bracket-team-score { font-family: 'Barlow Condensed',sans-serif; font-size: 18px; font-weight: 700; margin-left: 8px; }
+  .bracket-team.winner .bracket-team-score { color: var(--accent); }
+  .bracket-pending { color: var(--text-muted); font-size: 11px; padding: 6px 10px; font-style: italic; }
+
+  /* SEARCH */
+  .search-bar { display: flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; margin-bottom: 20px; transition: border-color 0.2s; }
+  .search-bar:focus-within { border-color: var(--blue-light); }
+  .search-bar input { background: none; border: none; outline: none; color: var(--text); font-size: 14px; flex: 1; }
+  .search-bar input::placeholder { color: var(--text-muted); }
+
+  @media (max-width: 768px) { .pools-grid { grid-template-columns: 1fr; } .bracket-grid { grid-template-columns: 1fr; } .form-row { grid-template-columns: 1fr; } }
+  footer { background: var(--surface); border-top: 1px solid var(--border); padding: 20px; text-align: center; font-size: 12px; color: var(--text-muted); }
+  footer a { color: var(--blue-light); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo-badge">TIP 2026</div>
+    <div class="header-title">
+      <h1>Tournoi International Poussins / Poussines</h1>
+      <p>32ème édition &nbsp;·&nbsp; Comité du Var de Volley-Ball</p>
+    </div>
+    <button class="admin-btn" id="admin-toggle-btn" onclick="toggleAdminPanel()">⚙ Admin</button>
+  </div>
+</header>
+
+<nav class="main-nav">
+  <div class="main-nav-inner">
+    <button class="tab-btn active" onclick="showTab('accueil',this)">🏆 Accueil</button>
+    <button class="tab-btn masc" onclick="showTab('t1-masc',this)">Tour 1 – Masculin</button>
+    <button class="tab-btn fem" onclick="showTab('t1-fem',this)">Tour 1 – Féminin</button>
+    <button class="tab-btn masc" onclick="showTab('t2-masc',this)">Tour 2 – Masculin</button>
+    <button class="tab-btn fem" onclick="showTab('t2-fem',this)">Tour 2 – Féminin</button>
+    <button class="tab-btn masc" onclick="showTab('finales-m',this)">🏅 Phase Finale - Masculin</button>
+    <button class="tab-btn fem" onclick="showTab('finales-f',this)">🏅 Phase Finale - Féminin</button>
+    <button class="tab-btn" onclick="showTab('classement',this)">Classement Général</button>
+    <button class="tab-btn" onclick="showTab('search',this)">🔍 Équipe</button>
+  </div>
+</nav>
+
+<!-- ADMIN OVERLAY -->
+<div class="admin-overlay" id="admin-overlay" onclick="closeAdminOnBg(event)">
+  <div class="admin-modal">
+    <div class="admin-header">
+      <h2>⚙ Interface Administrateur</h2>
+      <button class="admin-close" onclick="closeAdmin()">✕</button>
+    </div>
+    <div class="admin-body">
+      <!-- LOGIN -->
+      <div class="admin-login" id="admin-login-section">
+        <p style="font-size:13px;color:var(--text-muted);margin-bottom:4px;">Accès réservé aux organisateurs</p>
+        <input type="password" id="admin-pwd" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')doLogin()">
+        <button class="btn-login" onclick="doLogin()">Connexion</button>
+        <div class="admin-error" id="admin-error"></div>
+      </div>
+      <!-- FORM -->
+      <div class="admin-form" id="admin-form-section">
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <p style="font-size:13px;color:var(--green);">✓ Connecté – Saisie des résultats</p>
+          <button class="admin-logout" onclick="doLogout()">Déconnexion</button>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Genre</label>
+            <select id="f-gender" onchange="updateTourOptions()">
+              <option value="m">Masculin</option>
+              <option value="f">Féminin</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Tour</label>
+            <select id="f-tour" onchange="updatePoolOptions()">
+              <option value="t1">1er Tour</option>
+              <option value="t2">2ème Tour</option>
+              <option value="finale">Phase Finale</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Poule</label>
+          <select id="f-pool" onchange="updateMatchOptions()"></select>
+        </div>
+
+        <div class="form-group">
+          <label>Match</label>
+          <select id="f-match"></select>
+        </div>
+
+        <div class="form-group">
+          <label>Score</label>
+          <div class="score-row">
+            <input type="number" class="score-input" id="f-score1" min="0" max="99" placeholder="0">
+            <div class="score-sep">–</div>
+            <input type="number" class="score-input" id="f-score2" min="0" max="99" placeholder="0">
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:4px;font-size:11px;color:var(--text-muted);">
+            <span id="f-team1-lbl">Équipe 1</span>
+            <span id="f-team2-lbl">Équipe 2</span>
+          </div>
+        </div>
+
+        <button class="btn-save" onclick="saveScore()">💾 Enregistrer le score</button>
+        <button class="btn-save" onclick="deleteScore()" style="background:rgba(239,68,68,0.8);margin-top:4px;">🗑 Effacer ce résultat</button>
+        <div class="admin-success" id="admin-success">✓ Score enregistré avec succès !</div>
+        <div class="admin-success" id="admin-deleted" style="background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.3);color:#ef4444;">✓ Résultat effacé !</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- ACCUEIL -->
+  <div id="tab-accueil" class="tab-panel active">
+    <div class="hero">
+      <h2>Tournoi International Poussins / Poussines</h2>
+      <div class="hero-sub">32ème Édition · 2026 · </div>
+
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="val" style="color:var(--accent)" id="stat-total">80</div><div class="lbl">Équipes</div></div>
+      <div class="stat-card"><div class="val" style="color:var(--masc)">40</div><div class="lbl">Équipes Masculines</div></div>
+      <div class="stat-card"><div class="val" style="color:var(--fem)">40</div><div class="lbl">Équipes Féminines</div></div>
+      <div class="stat-card"><div class="val" style="color:var(--blue-light)">22</div><div class="lbl">Poules T1+T2 Masc.</div></div>
+      <div class="stat-card"><div class="val" style="color:var(--fem)">22</div><div class="lbl">Poules T1+T2 Fém.</div></div>
+    </div>
+
+
+  </div>
+
+  <!-- TOUR 1 MASCULIN -->
+  <div id="tab-t1-masc" class="tab-panel">
+    <div class="section-header"><h2>1er Tour – Masculin</h2><div class="section-badge masc">10 Poules</div><div class="section-line"></div></div>
+    <div class="pools-grid" id="t1-masc-grid"></div>
+    <div class="section-header" style="margin-top:32px;">
+      <h2>Meilleurs 3ème – Masculin</h2>
+      <div class="section-badge masc">Classement intermédiaire</div>
+      <div class="section-line"></div>
+    </div>
+    <div id="best3-masc-block" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
+      <div class="empty-state"><div class="empty-icon">⏳</div>En attente des résultats du 1er tour</div>
+    </div>
+  </div>
+
+  <!-- TOUR 1 FÉMININ -->
+  <div id="tab-t1-fem" class="tab-panel">
+    <div class="section-header"><h2>1er Tour – Féminin</h2><div class="section-badge fem">10 Poules</div><div class="section-line"></div></div>
+    <div class="pools-grid" id="t1-fem-grid"></div>
+    <div class="section-header" style="margin-top:32px;">
+      <h2>Meilleures 3ème – Féminin</h2>
+      <div class="section-badge fem">Classement intermédiaire</div>
+      <div class="section-line"></div>
+    </div>
+    <div id="best3-fem-block" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
+      <div class="empty-state"><div class="empty-icon">⏳</div>En attente des résultats du 1er tour</div>
+    </div>
+  </div>
+
+  <!-- TOUR 2 MASCULIN -->
+  <div id="tab-t2-masc" class="tab-panel">
+    <div class="section-header"><h2>2ème Tour – Masculin</h2><div class="section-badge masc">12 Poules</div><div class="section-line"></div></div>
+    <div class="pools-grid" id="t2-masc-grid"></div>
+  </div>
+
+  <!-- TOUR 2 FÉMININ -->
+  <div id="tab-t2-fem" class="tab-panel">
+    <div class="section-header"><h2>2ème Tour – Féminin</h2><div class="section-badge fem">12 Poules</div><div class="section-line"></div></div>
+    <div class="pools-grid" id="t2-fem-grid"></div>
+  </div>
+
+  
+  <!-- FINALES MASCULIN -->
+  <div id="tab-finales-m" class="tab-panel">
+    <div class="section-header">
+      <h2>Phase Finale – Masculin</h2>
+      <div class="section-badge masc"></div>
+      <div class="section-line"></div>
+    </div>
+    <div id="finals-masc-content"><div class="empty-state"><div class="empty-icon">⏳</div>Résultats à venir</div></div>
+  </div>
+
+  <!-- FINALES FEMININ -->
+  <div id="tab-finales-f" class="tab-panel">
+    <div class="section-header">
+      <h2>Phase Finale – Féminin</h2>
+      <div class="section-badge fem"></div>
+      <div class="section-line"></div>
+    </div>
+    <div id="finals-fem-content"><div class="empty-state"><div class="empty-icon">⏳</div>Résultats à venir</div></div>
+  </div>
+
+  <!-- CLASSEMENT GÉNÉRAL -->
+  <div id="tab-classement" class="tab-panel">
+    <div class="section-header"><h2>Classement Général Final</h2><div class="section-line"></div></div>
+    <div class="classement-cols">
+      <div>
+        <div class="classement-block">
+          <div class="classement-block-header"><span style="width:10px;height:10px;border-radius:50%;background:var(--masc);display:inline-block;flex-shrink:0;"></span>Classement Masculin</div>
+          <div id="rank-masc-content"><div class="empty-state"><div class="empty-icon">⏳</div>En attente de la fin du tournoi</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="classement-block">
+          <div class="classement-block-header"><span style="width:10px;height:10px;border-radius:50%;background:var(--fem);display:inline-block;flex-shrink:0;"></span>Classement Féminin</div>
+          <div id="rank-fem-content"><div class="empty-state"><div class="empty-icon">⏳</div>En attente de la fin du tournoi</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEARCH -->
+  <div id="tab-search" class="tab-panel">
+    <div class="section-header"><h2>Rechercher une Équipe</h2><div class="section-line"></div></div>
+    <div class="search-bar">
+      <span>🔍</span>
+      <input type="text" id="team-search" placeholder="Tapez le nom d'une équipe..." oninput="searchTeam(this.value)">
+    </div>
+    <div id="search-results"></div>
+  </div>
+
+</div>
+
+<footer>
+  <strong>TIP 2026 – Tournoi International Poussins / Poussines · 32ème Édition</strong><br>
+  <a href="https://www.volley83.fr" target="_blank">www.volley83.fr</a> · Comité du Var de Volley-Ball
+</footer>
+
+<script>
+// ======================== SUPABASE CONFIG ========================
+const SUPABASE_URL = 'https://nssdhgpvkdbgdewsnlgl.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_GeMMc45mQbDOq-ZkU5vXZw_lYJe9KXf';
+
+async function sbFetch(method, path, body) {
+  const headers = {
+    'apikey': SUPABASE_KEY,
+    'Authorization': 'Bearer ' + SUPABASE_KEY,
+    'Content-Type': 'application/json',
+  };
+  if (method === 'POST') headers['Prefer'] = 'resolution=merge-duplicates,return=minimal';
+  if (method === 'GET') headers['Prefer'] = 'return=representation';
+
+  const res = await fetch(SUPABASE_URL + '/rest/v1/' + path, {
+    method,
+    headers,
+    body: body ? JSON.stringify(body) : undefined
+  });
+
+  if (method === 'GET') {
+    if (!res.ok) throw new Error('Supabase GET error ' + res.status);
+    return res.json();
+  }
+  // For POST/DELETE, Supabase returns 200/201/204 - all acceptable
+  return res;
+}
+
+async function loadScoresFromDB() {
+  try {
+    const scores = await sbFetch('GET', 'scores?select=*');
+    return Array.isArray(scores) ? scores : [];
+  } catch(e) { console.error('DB load error:', e); return []; }
+}
+
+async function saveScoreToDB(entry) {
+  await sbFetch('POST', 'scores', entry);
+}
+
+async function deleteScoreFromDB(gender, tour, pool_name, match_idx) {
+  await sbFetch('DELETE', 'scores?gender=eq.' + encodeURIComponent(gender) +
+    '&tour=eq.' + encodeURIComponent(tour) +
+    '&pool_name=eq.' + encodeURIComponent(pool_name) +
+    '&match_idx=eq.' + match_idx);
+}
+
+// ======================== DATA ========================
+const BASE_DATA = {"tournament": "Tournoi International Poussins / Poussines 2026", "edition": "32ème Edition", "masculine": {"t1_pools": [{"pool_name": "Ervean N'Gapeth", "standings": [{"rank": 1, "team": "Gironde VB I", "pts": 9, "wins": 0, "losses": 0, "pts_scored": 75, "pts_conceded": 25}, {"rank": 2, "team": "Bouc Bel Air VB", "pts": 8, "wins": 0, "losses": 1, "pts_scored": 59, "pts_conceded": 64}, {"rank": 3, "team": "AS l'Union VB", "pts": 7, "wins": 0, "losses": 2, "pts_scored": 57, "pts_conceded": 64}, {"rank": 4, "team": "VB Ollioulais", "pts": 6, "wins": 0, "losses": 3, "pts_scored": 37, "pts_conceded": 75}], "matches": [{"team1": "VB Ollioulais", "score1": 14, "score2": 25, "team2": "AS l'Union VB", "winner": "AS l'Union VB"}, {"team1": "Gironde VB I", "score1": 25, "score2": 9, "team2": "Bouc Bel Air VB", "winner": "Gironde VB I"}, {"team1": "Gironde VB I", "score1": 25, "score2": 12, "team2": "AS l'Union VB", "winner": "Gironde VB I"}, {"team1": "Bouc Bel Air VB", "score1": 25, "score2": 19, "team2": "VB Ollioulais", "winner": "Bouc Bel Air VB"}, {"team1": "AS l'Union VB", "score1": 20, "score2": 25, "team2": "Bouc Bel Air VB", "winner": "Bouc Bel Air VB"}, {"team1": "VB Ollioulais", "score1": 4, "score2": 25, "team2": "Gironde VB I", "winner": "Gironde VB I"}]}, {"pool_name": "Benjamin Toniutti", "standings": [{"rank": 1, "team": "Meudon Chaville Sèvres VB", "pts": 9, "wins": 0, "losses": 0, "pts_scored": 75, "pts_conceded": 31}, {"rank": 2, "team": "Mandelieu la Napoule VB", "pts": 8, "wins": 0, "losses": 1, "pts_scored": 63, "pts_conceded": 55}, {"rank": 3, "team": "US des Aigles Blancs de St Paul", "pts": 7, "wins": 0, "losses": 2, "pts_scored": 47, "pts_conceded": 70}, {"rank": 4, "team": "Arago de Sète II", "pts": 6, "wins": 0, "losses": 3, "pts_scored": 46, "pts_conceded": 75}], "matches": [{"team1": "Mandelieu la Napoule VB", "score1": 25, "score2": 12, "team2": "US des Aigles Blancs de St Paul", "winner": "Mandelieu la Napoule VB"}, {"team1": "Arago de Sète II", "score1": 8, "score2": 25, "team2": "Meudon Chaville Sèvres VB", "winner": "Meudon Chaville Sèvres VB"}, {"team1": "Arago de Sète II", "score1": 20, "score2": 25, "team2": "US des Aigles Blancs de St Paul", "winner": "US des Aigles Blancs de St Paul"}, {"team1": "Meudon Chaville Sèvres VB", "score1": 25, "score2": 13, "team2": "Mandelieu la Napoule VB", "winner": "Meudon Chaville Sèvres VB"}, {"team1": "US des Aigles Blancs de St Paul", "score1": 10, "score2": 25, "team2": "Meudon Chaville Sèvres VB", "winner": "Meudon Chaville Sèvres VB"}, {"team1": "Mandelieu la Napoule VB", "score1": 25, "score2": 18, "team2": "Arago de Sète II", "winner": "Mandelieu la Napoule VB"}]}, {"pool_name": "Timothée Carle", "standings": [{"rank": 1, "team": "Volley Beaucaire Tarascon le Grès", "pts": 9, "wins": 0, "losses": 0, "pts_scored": 75, "pts_conceded": 47}, {"rank": 2, "team": "Aix UC Volley-Ball", "pts": 7, "wins": 0, "losses": 2, "pts_scored": 58, "pts_conceded": 65}, {"rank": 3, "team": "Touvet VB", "pts": 7, "wins": 0, "losses": 2, "pts_scored": 55, "pts_conceded": 64}, {"rank": 4, "team": "Montpellier Croix d'Argent Volley", "pts": 7, "wins": 0, "losses": 2, "pts_scored": 53, "pts_conceded": 65}], "matches": [{"team1": "Volley Beaucaire Tarascon le Grès", "score1": 25, "score2": 14, "team2": "Montpellier Croix d'Argent Volley", "winner": "Volley Beaucaire Tarascon le Grès"}, {"team1": "Touvet VB", "score1": 15, "score2": 25, "team2": "Aix UC Volley-Ball", "winner": "Aix UC Volley-Ball"}, {"team1": "Touvet VB", "score1": 25, "score2": 14, "team2": "Montpellier Croix d'Argent Volley", "winner": "Touvet VB"}, {"team1": "Aix UC Volley-Ball", "score1": 18, "score2": 25, "team2": "Volley Beaucaire Tarascon le Grès", "winner": "Volley Beaucaire Tarascon le Grès"}, {"team1": "Montpellier Croix d'Argent Volley", "score1": 25, "score2": 15, "team2": "Aix UC Volley-Ball", "winner": "Montpellier Croix d'Argent Volley"}, {"team1": "Volley Beaucaire Tarascon le Grès", "score1": 25, "score2": 15, "team2": "Touvet VB", "winner": "Volley Beaucaire Tarascon le Grès"}]}, {"pool_name": "Barthélémy Chinenyeze", "standings": [{"rank": 1, "team": "Marignane VB", "pts": 9, "wins": 0, "losses": 0, "pts_scored": 75, "pts_conceded": 37}, {"rank": 2, "team": "Pays de Grasse VB", "pts": 8, "wins": 0, "losses": 1, "pts_scored": 65, "pts_conceded": 58}, {"rank": 3, "team": "Haute-Garonne VB", "pts": 7, "wins": 0, "losses": 2, "pts_scored": 58, "pts_conceded": 68}, {"rank": 4, "team": "AS VB Marigny-le-Chatel", "pts": 6, "wins": 0, "losses": 3, "pts_scored": 40, "pts_conceded": 75}], "matches": [{"team1": "Pays de Grasse VB", "score1": 25, "score2": 14, "team2": "AS VB Marigny-le-Chatel", "winner": "Pays de Grasse VB"}, {"team1": "Haute-Garonne VB", "score1": 14, "score2": 25, "team2": "Marignane VB", "winner": "Marignane VB"}, {"team1": "Haute-Garonne VB", "score1": 25, "score2": 18, "team2": "AS VB Marigny-le-Chatel", "winner": "Haute-Garonne VB"}, {"team1": "Marignane VB", "score1": 25, "score2": 15, "team2": "Pays de Grasse VB", "winner": "Marignane VB"}, {"team1": "AS VB Marigny-le-Chatel", "score1": 8, "score2": 25, "team2": "Marignane VB", "winner": "Marignane VB"}, {"team1": "Pays de Grasse VB", "score1": 25, "score2": 19, "team2": "Haute-Garonne VB", "winner": "Pays de Grasse VB"}]}, {"pool_name": "Trévor Clévenot", "standings": [{"rank": 1, "team": "AS Cannes VB", "pts": 9, "wins": 0, "losses": 0, "pts_scored": 75, "pts_conceded": 40}, {"rank": 2, "team": "Fréjus Var Volley", "pts": 8, "wins": 0, "losses": 1, "pts_scored": 60, "pts_conceded": 63}, {"rank": 3, "team": "St-Louis Phoenix Volley II", "pts": 7, "wins": 0, "losses": 2, "pts_scored": 57, "pts_conceded": 73}, {"rank": 4, "team": "Nîmes VB", "pts": 6, "wins": 0, "losses": 3, "pts_scored": 59, "pts_conceded": 75}], "matches": [{"team1": "Fréjus Var Volley", "score1": 25, "score2": 21, "team2": "Nîmes VB", "winner": "Fréjus Var Volley"}, {"team1": "St-Louis Phoenix Volley II", "score1": 15, "score2": 25, "team2": "AS Cannes VB", "winner": "AS Cannes VB"}, {"team1": "St-Louis Phoenix Volley II", "score1": 25, "score2": 23, "team2": "Nîmes VB", "winner": "St-Louis Phoenix Volley II"}, {"team1": "AS Cannes VB", "score1": 25, "score2": 10, "team2": "Fréjus Var Volley", "winner": "AS Cannes VB"}, {"team1": "Nîmes VB", "score1": 15, "score2": 25, "team2": "AS Cannes VB", "winner": "AS Cannes VB"}, {"team1": "Fréjus Var Volley", "score1": 25, "score2": 17, "team2": "St-Louis Phoenix Volley II", "winner": "Fréjus Var Volley"}]}, {"pool_name": "Antoine Brizard", "standings": [{"rank": 1, "team": "VB Club St-Leu", "pts": 9, "wins": 0, "losses": 0, "pts_scored": 76, "pts_conceded": 43}, {"rank": 2, "team": "Arago de Sète I", "pts": 8, "wins": 0, "losses": 1, "pts_scored": 74, "pts_conceded": 44}, {"rank": 3, "team": "VC Hyères-Pierrefeu la Londe", "pts": 7, "wins": 0, "losses": 2, "pts_scored": 49, "pts_conceded": 66}, {"rank": 4, "team": "US Pontet Volley Avenir", "pts": 6, "wins": 0, "losses": 3, "pts_scored": 29, "pts_conceded": 75}], "matches": [{"team1": "US Pontet Volley Avenir", "score1": 7, "score2": 25, "team2": "Arago de Sète I", "winner": "Arago de Sète I"}, {"team1": "VB Club St-Leu", "score1": 25, "score2": 13, "team2": "VC Hyères-Pierrefeu la Londe", "winner": "VB Club St-Leu"}, {"team1": "VB Club St-Leu", "score1": 26, "score2": 24, "team2": "Arago de Sète I", "winner": "VB Club St-Leu"}, {"team1": "VC Hyères-Pierrefeu la Londe", "score1": 25, "score2": 16, "team2": "US Pontet Volley Avenir", "winner": "VC Hyères-Pierrefeu la Londe"}, {"team1": "Arago de Sète I", "score1": 25, "score2": 11, "team2": "VC Hyères-Pierrefeu la Londe", "winner": "Arago de Sète I"}, {"team1": "US Pontet Volley Avenir", "score1": 6, "score2": 25, "team2": "VB Club St-Leu", "winner": "VB Club St-Leu"}]}, {"pool_name": "Jenia Grebennikov", "standings": [{"rank": 1, "team": "ASBAM Montpellier Volley", "pts": 9, "wins": 0, "losses": 0, "pts_scored": 75, "pts_conceded": 51}, {"rank": 2, "team": "Gironde VB II", "pts": 7, "wins": 0, "losses": 2, "pts_scored": 62, "pts_conceded": 63}, {"rank": 3, "team": "Aubagne-Carnoux VB", "pts": 7, "wins": 0, "losses": 2, "pts_scored": 60, "pts_conceded": 70}, {"rank": 4, "team": "Draguignan Var VB", "pts": 7, "wins": 0, "losses": 2, "pts_scored": 53, "pts_conceded": 66}], "matches": [{"team1": "Aubagne-Carnoux VB", "score1": 19, "score2": 25, "team2": "ASBAM Montpellier Volley", "winner": "ASBAM Montpellier Volley"}, {"team1": "Gironde VB II", "score1": 25, "score2": 13, "team2": "Draguignan Var VB", "winner": "Gironde VB II"}, {"team1": "Gironde VB II", "score1": 17, "score2": 25, "team2": "ASBAM Montpellier Volley", "winner": "ASBAM Montpellier Volley"}, {"team1": "Draguignan Var VB", "score1": 25, "score2": 16, "team2": "Aubagne-Carnoux VB", "winner": "Draguignan Var VB"}, {"team1": "ASBAM Montpellier Volley", "score1": 25, "score2": 15, "team2": "Draguignan Var VB", "winner": "ASBAM Montpellier Volley"}, {"team1": "Aubagne-Carnoux VB", "score1": 25, "score2": 20, "team2": "Gironde VB II", "winner": "Aubagne-Carnoux VB"}]}, {"pool_name": "Joris Seddik", "standings": [{"rank": 1, "team": "Mougins Côte d'Azur VB", "pts": 9, "wins": 0, "losses": 0, "pts_scored": 75, "pts_conceded": 43}, {"rank": 2, "team": "ALN Bras Panon VB", "pts": 8, "wins": 0, "losses": 1, "pts_scored": 64, "pts_conceded": 62}, {"rank": 3, "team": "Avignon VB", "pts": 7, "wins": 0, "losses": 2, "pts_scored": 70, "pts_conceded": 70}, {"rank": 4, "team": "Strasbourg UC Volley", "pts": 6, "wins": 0, "losses": 3, "pts_scored": 41, "pts_conceded": 75}], "matches": [{"team1": "Mougins Côte d'Azur VB", "score1": 25, "score2": 11, "team2": "ALN Bras Panon VB", "winner": "Mougins Côte d'Azur VB"}, {"team1": "Strasbourg UC Volley", "score1": 17, "score2": 25, "team2": "Avignon VB", "winner": "Avignon VB"}, {"team1": "Strasbourg UC Volley", "score1": 11, "score2": 25, "team2": "ALN Bras Panon VB", "winner": "ALN Bras Panon VB"}, {"team1": "Avignon VB", "score1": 19, "score2": 25, "team2": "Mougins Côte d'Azur VB", "winner": "Mougins Côte d'Azur VB"}, {"team1": "ALN Bras Panon VB", "score1": 28, "score2": 26, "team2": "Avignon VB", "winner": "ALN Bras Panon VB"}, {"team1": "Mougins Côte d'Azur VB", "score1": 25, "score2": 13, "team2": "Strasbourg UC Volley", "winner": "Mougins Côte d'Azur VB"}]}, {"pool_name": "Jean Patry", "standings": [{"rank": 1, "team": "Muret VB", "pts": 9, "wins": 0, "losses": 0, "pts_scored": 75, "pts_conceded": 49}, {"rank": 2, "team": "AS de la Vallée de la Sauer", "pts": 8, "wins": 0, "losses": 1, "pts_scored": 67, "pts_conceded": 58}, {"rank": 3, "team": "VB Club Clermontais", "pts": 7, "wins": 0, "losses": 2, "pts_scored": 58, "pts_conceded": 68}, {"rank": 4, "team": "Vidauban VB", "pts": 6, "wins": 0, "losses": 3, "pts_scored": 50, "pts_conceded": 75}], "matches": [{"team1": "Vidauban VB", "score1": 18, "score2": 25, "team2": "VB Club Clermontais", "winner": "VB Club Clermontais"}, {"team1": "AS de la Vallée de la Sauer", "score1": 17, "score2": 25, "team2": "Muret VB", "winner": "Muret VB"}, {"team1": "AS de la Vallée de la Sauer", "score1": 25, "score2": 20, "team2": "VB Club Clermontais", "winner": "AS de la Vallée de la Sauer"}, {"team1": "Muret VB", "score1": 25, "score2": 19, "team2": "Vidauban VB", "winner": "Muret VB"}, {"team1": "VB Club Clermontais", "score1": 13, "score2": 25, "team2": "Muret VB", "winner": "Muret VB"}, {"team1": "Vidauban VB", "score1": 13, "score2": 25, "team2": "AS de la Vallée de la Sauer", "winner": "AS de la Vallée de la Sauer"}]}, {"pool_name": "Kevin Tillie", "standings": [{"rank": 1, "team": "Volley St-Vitois", "pts": 9, "wins": 0, "losses": 0, "pts_scored": 75, "pts_conceded": 55}, {"rank": 2, "team": "Salon Volley", "pts": 8, "wins": 0, "losses": 1, "pts_scored": 67, "pts_conceded": 52}, {"rank": 3, "team": "St-Louis Phoenix Volley I", "pts": 7, "wins": 0, "losses": 2, "pts_scored": 58, "pts_conceded": 67}, {"rank": 4, "team": "US Aubenas VB", "pts": 6, "wins": 0, "losses": 3, "pts_scored": 49, "pts_conceded": 75}], "matches": [{"team1": "Salon Volley", "score1": 25, "score2": 10, "team2": "St-Louis Phoenix Volley I", "winner": "Salon Volley"}, {"team1": "Volley St-Vitois", "score1": 25, "score2": 15, "team2": "US Aubenas VB", "winner": "Volley St-Vitois"}, {"team1": "Volley St-Vitois", "score1": 25, "score2": 23, "team2": "St-Louis Phoenix Volley I", "winner": "Volley St-Vitois"}, {"team1": "US Aubenas VB", "score1": 17, "score2": 25, "team2": "Salon Volley", "winner": "Salon Volley"}, {"team1": "St-Louis Phoenix Volley I", "score1": 25, "score2": 17, "team2": "US Aubenas VB", "winner": "St-Louis Phoenix Volley I"}, {"team1": "Salon Volley", "score1": 17, "score2": 25, "team2": "Volley St-Vitois", "winner": "Volley St-Vitois"}]}], "t2_pools": [{"pool_name": "Tomasz Fornal", "standings": [{"rank": 1, "team": "Volley St-Vitois", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 2, "team": "Meudon Chaville Sèvres VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 3, "team": "Touvet VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}], "matches": [{"team1": "Volley St-Vitois", "score1": 0, "score2": 0, "team2": "Touvet VB", "winner": null}, {"team1": "Meudon Chaville Sèvres VB", "score1": 0, "score2": 0, "team2": "Volley St-Vitois", "winner": null}, {"team1": "Touvet VB", "score1": 0, "score2": 0, "team2": "Meudon Chaville Sèvres VB", "winner": null}]}, {"pool_name": "Alessandro Michieletto", "standings": [{"rank": 1, "team": "Muret VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 2, "team": "Gironde VB I", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 3, "team": "St-Louis Phoenix Volley I", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}], "matches": [{"team1": "Muret VB", "score1": 0, "score2": 0, "team2": "St-Louis Phoenix Volley I", "winner": null}, {"team1": "Gironde VB I", "score1": 0, "score2": 0, "team2": "Muret VB", "winner": null}, {"team1": "St-Louis Phoenix Volley I", "score1": 0, "score2": 0, "team2": "Gironde VB I", "winner": null}]}, {"pool_name": "Yuki Ishikawa", "standings": [{"rank": 1, "team": "Mougins Côte d'Azur VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 2, "team": "AS l'Union VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 3, "team": "Salon Volley", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}], "matches": [{"team1": "Mougins Côte d'Azur VB", "score1": 0, "score2": 0, "team2": "AS l'Union VB", "winner": null}, {"team1": "Salon Volley", "score1": 0, "score2": 0, "team2": "Mougins Côte d'Azur VB", "winner": null}, {"team1": "AS l'Union VB", "score1": 0, "score2": 0, "team2": "Salon Volley", "winner": null}]}, {"pool_name": "Taylor Averill", "standings": [{"rank": 1, "team": "ASBAM Montpellier Volley", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 2, "team": "Avignon VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 3, "team": "AS de la Vallée de la Sauer", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}], "matches": [{"team1": "ASBAM Montpellier Volley", "score1": 0, "score2": 0, "team2": "Avignon VB", "winner": null}, {"team1": "AS de la Vallée de la Sauer", "score1": 0, "score2": 0, "team2": "ASBAM Montpellier Volley", "winner": null}, {"team1": "Avignon VB", "score1": 0, "score2": 0, "team2": "AS de la Vallée de la Sauer", "winner": null}]}, {"pool_name": "Wilfredo Leon", "standings": [{"rank": 1, "team": "VB Club St-Leu", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 2, "team": "ALN Bras Panon VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 3, "team": "Bouc Bel Air VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}], "matches": [{"team1": "VB Club St-Leu", "score1": 0, "score2": 0, "team2": "Bouc Bel Air VB", "winner": null}, {"team1": "ALN Bras Panon VB", "score1": 0, "score2": 0, "team2": "VB Club St-Leu", "winner": null}, {"team1": "Bouc Bel Air VB", "score1": 0, "score2": 0, "team2": "ALN Bras Panon VB", "winner": null}]}, {"pool_name": "Toncek Stern", "standings": [{"rank": 1, "team": "Mandelieu la Napoule VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 2, "team": "AS Cannes VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 3, "team": "Gironde VB II", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}], "matches": [{"team1": "AS Cannes VB", "score1": 0, "score2": 0, "team2": "Mandelieu la Napoule VB", "winner": null}, {"team1": "Gironde VB II", "score1": 0, "score2": 0, "team2": "AS Cannes VB", "winner": null}, {"team1": "Mandelieu la Napoule VB", "score1": 0, "score2": 0, "team2": "Gironde VB II", "winner": null}]}, {"pool_name": "Wallace De Souza", "standings": [{"rank": 1, "team": "Marignane VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 2, "team": "Arago de Sète I", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 3, "team": "Aix UC Volley-Ball", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}], "matches": [{"team1": "Marignane VB", "score1": 0, "score2": 0, "team2": "Aix UC Volley-Ball", "winner": null}, {"team1": "Arago de Sète I", "score1": 0, "score2": 0, "team2": "Marignane VB", "winner": null}, {"team1": "Aix UC Volley-Ball", "score1": 0, "score2": 0, "team2": "Arago de Sète I", "winner": null}]}, {"pool_name": "Nimir Abdel-Aziz", "standings": [{"rank": 1, "team": "Volley Beaucaire Tarascon le Grès", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 2, "team": "Fréjus Var Volley", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 3, "team": "Pays de Grasse VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}], "matches": [{"team1": "Volley Beaucaire Tarascon le Grès", "score1": 0, "score2": 0, "team2": "Pays de Grasse VB", "winner": null}, {"team1": "Fréjus Var Volley", "score1": 0, "score2": 0, "team2": "Volley Beaucaire Tarascon le Grès", "winner": null}, {"team1": "Pays de Grasse VB", "score1": 0, "score2": 0, "team2": "Fréjus Var Volley", "winner": null}]}, {"pool_name": "Pawel Zatorski", "standings": [{"rank": 1, "team": "Draguignan Var VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 2, "team": "Aubagne-Carnoux VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 3, "team": "Arago de Sète II", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 4, "team": "Montpellier Croix d'Argent Volley", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}], "matches": [{"team1": "Aubagne-Carnoux VB", "score1": 0, "score2": 0, "team2": "Draguignan Var VB", "winner": null}, {"team1": "Arago de Sète II", "score1": 0, "score2": 0, "team2": "Montpellier Croix d'Argent Volley", "winner": null}, {"team1": "Arago de Sète II", "score1": 0, "score2": 0, "team2": "Draguignan Var VB", "winner": null}, {"team1": "Montpellier Croix d'Argent Volley", "score1": 0, "score2": 0, "team2": "Aubagne-Carnoux VB", "winner": null}, {"team1": "Draguignan Var VB", "score1": 0, "score2": 0, "team2": "Montpellier Croix d'Argent Volley", "winner": null}, {"team1": "Aubagne-Carnoux VB", "score1": 0, "score2": 0, "team2": "Arago de Sète II", "winner": null}]}, {"pool_name": "Simone Gianelli", "standings": [{"rank": 1, "team": "VB Ollioulais", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 2, "team": "AS VB Marigny-le-Chatel", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 3, "team": "VB Club Clermontais", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 4, "team": "Strasbourg UC Volley", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}], "matches": [{"team1": "VB Club Clermontais", "score1": 0, "score2": 0, "team2": "Strasbourg UC Volley", "winner": null}, {"team1": "VB Ollioulais", "score1": 0, "score2": 0, "team2": "AS VB Marigny-le-Chatel", "winner": null}, {"team1": "VB Ollioulais", "score1": 0, "score2": 0, "team2": "Strasbourg UC Volley", "winner": null}, {"team1": "AS VB Marigny-le-Chatel", "score1": 0, "score2": 0, "team2": "VB Club Clermontais", "winner": null}, {"team1": "Strasbourg UC Volley", "score1": 0, "score2": 0, "team2": "AS VB Marigny-le-Chatel", "winner": null}, {"team1": "VB Club Clermontais", "score1": 0, "score2": 0, "team2": "VB Ollioulais", "winner": null}]}, {"pool_name": "Ricardo Lucarelli", "standings": [{"rank": 1, "team": "Vidauban VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 2, "team": "Haute-Garonne VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 3, "team": "US des Aigles Blancs de St Paul", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 4, "team": "Nîmes VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}], "matches": [{"team1": "Haute-Garonne VB", "score1": 0, "score2": 0, "team2": "Vidauban VB", "winner": null}, {"team1": "US des Aigles Blancs de St Paul", "score1": 0, "score2": 0, "team2": "Nîmes VB", "winner": null}, {"team1": "US des Aigles Blancs de St Paul", "score1": 0, "score2": 0, "team2": "Vidauban VB", "winner": null}, {"team1": "Nîmes VB", "score1": 0, "score2": 0, "team2": "Haute-Garonne VB", "winner": null}, {"team1": "Vidauban VB", "score1": 0, "score2": 0, "team2": "Nîmes VB", "winner": null}, {"team1": "Haute-Garonne VB", "score1": 0, "score2": 0, "team2": "US des Aigles Blancs de St Paul", "winner": null}]}, {"pool_name": "Jakub Kochanowski", "standings": [{"rank": 1, "team": "St-Louis Phoenix Volley II", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 2, "team": "US Aubenas VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 3, "team": "US Pontet Volley Avenir", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 4, "team": "VC Hyères-Pierrefeu la Londe", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}], "matches": [{"team1": "St-Louis Phoenix Volley II", "score1": 0, "score2": 0, "team2": "US Aubenas VB", "winner": null}, {"team1": "VC Hyères-Pierrefeu la Londe", "score1": 0, "score2": 0, "team2": "US Pontet Volley Avenir", "winner": null}, {"team1": "VC Hyères-Pierrefeu la Londe", "score1": 0, "score2": 0, "team2": "US Aubenas VB", "winner": null}, {"team1": "US Pontet Volley Avenir", "score1": 0, "score2": 0, "team2": "St-Louis Phoenix Volley II", "winner": null}, {"team1": "US Aubenas VB", "score1": 0, "score2": 0, "team2": "US Pontet Volley Avenir", "winner": null}, {"team1": "St-Louis Phoenix Volley II", "score1": 0, "score2": 0, "team2": "VC Hyères-Pierrefeu la Londe", "winner": null}]}]}, "feminine": {"t1_pools": [{"pool_name": "Amandine Giardino", "standings": [{"rank": 1, "team": "Arago de Sète", "pts": 9, "wins": 0, "losses": 0, "pts_scored": 75, "pts_conceded": 50}, {"rank": 2, "team": "Volley Beaucaire Tarascon le Grès", "pts": 8, "wins": 0, "losses": 1, "pts_scored": 70, "pts_conceded": 61}, {"rank": 3, "team": "US Aubenas VB", "pts": 7, "wins": 0, "losses": 2, "pts_scored": 66, "pts_conceded": 60}, {"rank": 4, "team": "Volley Pradétan Gardéen", "pts": 6, "wins": 0, "losses": 3, "pts_scored": 35, "pts_conceded": 75}], "matches": [{"team1": "Volley Pradétan Gardéen", "score1": 11, "score2": 25, "team2": "Arago de Sète", "winner": "Arago de Sète"}, {"team1": "US Aubenas VB", "score1": 22, "score2": 25, "team2": "Volley Beaucaire Tarascon le Grès", "winner": "Volley Beaucaire Tarascon le Grès"}, {"team1": "US Aubenas VB", "score1": 19, "score2": 25, "team2": "Arago de Sète", "winner": "Arago de Sète"}, {"team1": "Volley Beaucaire Tarascon le Grès", "score1": 25, "score2": 14, "team2": "Volley Pradétan Gardéen", "winner": "Volley Beaucaire Tarascon le Grès"}, {"team1": "Arago de Sète", "score1": 25, "score2": 20, "team2": "Volley Beaucaire Tarascon le Grès", "winner": "Arago de Sète"}, {"team1": "Volley Pradétan Gardéen", "score1": 10, "score2": 25, "team2": "US Aubenas VB", "winner": "US Aubenas VB"}]}, {"pool_name": "Amandha Sylves", "standings": [{"rank": 1, "team": "Montélimar VB", "pts": 9, "wins": 0, "losses": 0, "pts_scored": 75, "pts_conceded": 41}, {"rank": 2, "team": "Volero le Cannet Côte d'Azur", "pts": 8, "wins": 0, "losses": 1, "pts_scored": 73, "pts_conceded": 59}, {"rank": 3, "team": "AS l'Union VB", "pts": 7, "wins": 0, "losses": 2, "pts_scored": 43, "pts_conceded": 64}, {"rank": 4, "team": "Croix d'Argent Montpellier", "pts": 6, "wins": 0, "losses": 3, "pts_scored": 53, "pts_conceded": 80}], "matches": [{"team1": "Volero le Cannet Côte d'Azur", "score1": 18, "score2": 25, "team2": "Montélimar VB", "winner": "Montélimar VB"}, {"team1": "AS l'Union VB", "score1": 25, "score2": 14, "team2": "Croix d'Argent Montpellier", "winner": "AS l'Union VB"}, {"team1": "AS l'Union VB", "score1": 12, "score2": 25, "team2": "Montélimar VB", "winner": "Montélimar VB"}, {"team1": "Croix d'Argent Montpellier", "score1": 28, "score2": 30, "team2": "Volero le Cannet Côte d'Azur", "winner": "Volero le Cannet Côte d'Azur"}, {"team1": "Montélimar VB", "score1": 25, "score2": 11, "team2": "Croix d'Argent Montpellier", "winner": "Montélimar VB"}, {"team1": "Volero le Cannet Côte d'Azur", "score1": 25, "score2": 6, "team2": "AS l'Union VB", "winner": "Volero le Cannet Côte d'Azur"}]}, {"pool_name": "Amélie Rotar", "standings": [{"rank": 1, "team": "ALN Bras Panon VB", "pts": 9, "wins": 0, "losses": 0, "pts_scored": 75, "pts_conceded": 47}, {"rank": 2, "team": "Fréjus Var Volley", "pts": 8, "wins": 0, "losses": 1, "pts_scored": 69, "pts_conceded": 46}, {"rank": 3, "team": "AS VB Marigny-le-Chatel", "pts": 7, "wins": 0, "losses": 2, "pts_scored": 54, "pts_conceded": 63}, {"rank": 4, "team": "Marignane VB", "pts": 6, "wins": 0, "losses": 3, "pts_scored": 33, "pts_conceded": 75}], "matches": [{"team1": "Marignane VB", "score1": 8, "score2": 25, "team2": "ALN Bras Panon VB", "winner": "ALN Bras Panon VB"}, {"team1": "AS VB Marigny-le-Chatel", "score1": 9, "score2": 25, "team2": "Fréjus Var Volley", "winner": "Fréjus Var Volley"}, {"team1": "AS VB Marigny-le-Chatel", "score1": 20, "score2": 25, "team2": "ALN Bras Panon VB", "winner": "ALN Bras Panon VB"}, {"team1": "Fréjus Var Volley", "score1": 25, "score2": 12, "team2": "Marignane VB", "winner": "Fréjus Var Volley"}, {"team1": "ALN Bras Panon VB", "score1": 25, "score2": 19, "team2": "Fréjus Var Volley", "winner": "ALN Bras Panon VB"}, {"team1": "Marignane VB", "score1": 13, "score2": 25, "team2": "AS VB Marigny-le-Chatel", "winner": "AS VB Marigny-le-Chatel"}]}, {"pool_name": "Juliette Gelin", "standings": [{"rank": 1, "team": "Draguignan Var VB", "pts": 9, "wins": 0, "losses": 0, "pts_scored": 75, "pts_conceded": 50}, {"rank": 2, "team": "Rive Sud VB", "pts": 8, "wins": 0, "losses": 1, "pts_scored": 65, "pts_conceded": 47}, {"rank": 3, "team": "Istres Provence Volley", "pts": 7, "wins": 0, "losses": 2, "pts_scored": 54, "pts_conceded": 56}, {"rank": 4, "team": "Marie-Galante VB", "pts": 6, "wins": 0, "losses": 3, "pts_scored": 34, "pts_conceded": 75}], "matches": [{"team1": "Istres Provence Volley", "score1": 25, "score2": 6, "team2": "Marie-Galante VB", "winner": "Istres Provence Volley"}, {"team1": "Rive Sud VB", "score1": 15, "score2": 25, "team2": "Draguignan Var VB", "winner": "Draguignan Var VB"}, {"team1": "Rive Sud VB", "score1": 25, "score2": 6, "team2": "Marie-Galante VB", "winner": "Rive Sud VB"}, {"team1": "Draguignan Var VB", "score1": 25, "score2": 13, "team2": "Istres Provence Volley", "winner": "Draguignan Var VB"}, {"team1": "Marie-Galante VB", "score1": 22, "score2": 25, "team2": "Draguignan Var VB", "winner": "Draguignan Var VB"}, {"team1": "Istres Provence Volley", "score1": 16, "score2": 25, "team2": "Rive Sud VB", "winner": "Rive Sud VB"}]}, {"pool_name": "Emilie Respaut", "standings": [{"rank": 1, "team": "Aix UC Volley-Ball", "pts": 9, "wins": 0, "losses": 0, "pts_scored": 75, "pts_conceded": 45}, {"rank": 2, "team": "ASBAM Montpellier Volley", "pts": 8, "wins": 0, "losses": 1, "pts_scored": 70, "pts_conceded": 41}, {"rank": 3, "team": "Saint-Raphaël Volley", "pts": 7, "wins": 0, "losses": 2, "pts_scored": 52, "pts_conceded": 70}, {"rank": 4, "team": "Muret VB", "pts": 6, "wins": 0, "losses": 3, "pts_scored": 34, "pts_conceded": 75}], "matches": [{"team1": "Saint-Raphaël Volley", "score1": 25, "score2": 20, "team2": "Muret VB", "winner": "Saint-Raphaël Volley"}, {"team1": "ASBAM Montpellier Volley", "score1": 20, "score2": 25, "team2": "Aix UC Volley-Ball", "winner": "Aix UC Volley-Ball"}, {"team1": "ASBAM Montpellier Volley", "score1": 25, "score2": 4, "team2": "Muret VB", "winner": "ASBAM Montpellier Volley"}, {"team1": "Aix UC Volley-Ball", "score1": 25, "score2": 15, "team2": "Saint-Raphaël Volley", "winner": "Aix UC Volley-Ball"}, {"team1": "Muret VB", "score1": 10, "score2": 25, "team2": "Aix UC Volley-Ball", "winner": "Aix UC Volley-Ball"}, {"team1": "Saint-Raphaël Volley", "score1": 12, "score2": 25, "team2": "ASBAM Montpellier Volley", "winner": "ASBAM Montpellier Volley"}]}, {"pool_name": "Maeva Schalk", "standings": [{"rank": 1, "team": "Mandelieu la Napoule VB", "pts": 9, "wins": 0, "losses": 0, "pts_scored": 75, "pts_conceded": 40}, {"rank": 2, "team": "Bouc Bel Air VB", "pts": 8, "wins": 0, "losses": 1, "pts_scored": 65, "pts_conceded": 41}, {"rank": 3, "team": "Gironde VB I", "pts": 7, "wins": 0, "losses": 2, "pts_scored": 57, "pts_conceded": 57}, {"rank": 4, "team": "Nîmes VB", "pts": 6, "wins": 0, "losses": 3, "pts_scored": 16, "pts_conceded": 75}], "matches": [{"team1": "Mandelieu la Napoule VB", "score1": 25, "score2": 18, "team2": "Gironde VB I", "winner": "Mandelieu la Napoule VB"}, {"team1": "Nîmes VB", "score1": 2, "score2": 25, "team2": "Bouc Bel Air VB", "winner": "Bouc Bel Air VB"}, {"team1": "Nîmes VB", "score1": 7, "score2": 25, "team2": "Gironde VB I", "winner": "Gironde VB I"}, {"team1": "Bouc Bel Air VB", "score1": 15, "score2": 25, "team2": "Mandelieu la Napoule VB", "winner": "Mandelieu la Napoule VB"}, {"team1": "Gironde VB I", "score1": 14, "score2": 25, "team2": "Bouc Bel Air VB", "winner": "Bouc Bel Air VB"}, {"team1": "Mandelieu la Napoule VB", "score1": 25, "score2": 7, "team2": "Nîmes VB", "winner": "Mandelieu la Napoule VB"}]}, {"pool_name": "Lucille Gicquel", "standings": [{"rank": 1, "team": "Racing Club de Cannes", "pts": 9, "wins": 0, "losses": 0, "pts_scored": 75, "pts_conceded": 57}, {"rank": 2, "team": "Béziers Volley", "pts": 8, "wins": 0, "losses": 1, "pts_scored": 71, "pts_conceded": 64}, {"rank": 3, "team": "St-Denis Olympique la Réunion", "pts": 7, "wins": 0, "losses": 2, "pts_scored": 66, "pts_conceded": 69}, {"rank": 4, "team": "Vitrolles Sport VB", "pts": 6, "wins": 0, "losses": 3, "pts_scored": 53, "pts_conceded": 75}], "matches": [{"team1": "Vitrolles Sport VB", "score1": 19, "score2": 25, "team2": "St-Denis Olympique la Réunion", "winner": "St-Denis Olympique la Réunion"}, {"team1": "Béziers Volley", "score1": 21, "score2": 25, "team2": "Racing Club de Cannes", "winner": "Racing Club de Cannes"}, {"team1": "Béziers Volley", "score1": 25, "score2": 19, "team2": "St-Denis Olympique la Réunion", "winner": "Béziers Volley"}, {"team1": "Racing Club de Cannes", "score1": 25, "score2": 14, "team2": "Vitrolles Sport VB", "winner": "Racing Club de Cannes"}, {"team1": "St-Denis Olympique la Réunion", "score1": 22, "score2": 25, "team2": "Racing Club de Cannes", "winner": "Racing Club de Cannes"}, {"team1": "Vitrolles Sport VB", "score1": 20, "score2": 25, "team2": "Béziers Volley", "winner": "Béziers Volley"}]}, {"pool_name": "Héléna Cazaute", "standings": [{"rank": 1, "team": "VC Gruissan", "pts": 9, "wins": 0, "losses": 0, "pts_scored": 75, "pts_conceded": 35}, {"rank": 2, "team": "Jurançon Chapelle de Rousse Volley", "pts": 8, "wins": 0, "losses": 1, "pts_scored": 71, "pts_conceded": 51}, {"rank": 3, "team": "Pays de Grasse VB", "pts": 7, "wins": 0, "losses": 2, "pts_scored": 51, "pts_conceded": 60}, {"rank": 4, "team": "VC Hyères-Pierrefeu la Londe", "pts": 6, "wins": 0, "losses": 3, "pts_scored": 24, "pts_conceded": 75}], "matches": [{"team1": "Pays de Grasse VB", "score1": 10, "score2": 25, "team2": "VC Gruissan", "winner": "VC Gruissan"}, {"team1": "Jurançon Chapelle de Rousse Volley", "score1": 25, "score2": 10, "team2": "VC Hyères-Pierrefeu la Londe", "winner": "Jurançon Chapelle de Rousse Volley"}, {"team1": "Jurançon Chapelle de Rousse Volley", "score1": 21, "score2": 25, "team2": "VC Gruissan", "winner": "VC Gruissan"}, {"team1": "VC Hyères-Pierrefeu la Londe", "score1": 10, "score2": 25, "team2": "Pays de Grasse VB", "winner": "Pays de Grasse VB"}, {"team1": "VC Gruissan", "score1": 25, "score2": 4, "team2": "VC Hyères-Pierrefeu la Londe", "winner": "VC Gruissan"}, {"team1": "Pays de Grasse VB", "score1": 16, "score2": 25, "team2": "Jurançon Chapelle de Rousse Volley", "winner": "Jurançon Chapelle de Rousse Volley"}]}, {"pool_name": "Iman Ndiaye", "standings": [{"rank": 1, "team": "US Cagnes VB", "pts": 9, "wins": 0, "losses": 0, "pts_scored": 77, "pts_conceded": 34}, {"rank": 2, "team": "Coudoux Velaux la Fare VB", "pts": 8, "wins": 0, "losses": 1, "pts_scored": 75, "pts_conceded": 54}, {"rank": 3, "team": "Les Genêts de Mesplède", "pts": 7, "wins": 0, "losses": 2, "pts_scored": 48, "pts_conceded": 70}, {"rank": 4, "team": "Haute-Garonne VB", "pts": 6, "wins": 0, "losses": 3, "pts_scored": 33, "pts_conceded": 75}], "matches": [{"team1": "US Cagnes VB", "score1": 25, "score2": 3, "team2": "Les Genêts de Mesplède", "winner": "US Cagnes VB"}, {"team1": "Haute-Garonne VB", "score1": 7, "score2": 25, "team2": "Coudoux Velaux la Fare VB", "winner": "Coudoux Velaux la Fare VB"}, {"team1": "Haute-Garonne VB", "score1": 20, "score2": 25, "team2": "Les Genêts de Mesplède", "winner": "Les Genêts de Mesplède"}, {"team1": "Coudoux Velaux la Fare VB", "score1": 25, "score2": 27, "team2": "US Cagnes VB", "winner": "US Cagnes VB"}, {"team1": "Les Genêts de Mesplède", "score1": 20, "score2": 25, "team2": "Coudoux Velaux la Fare VB", "winner": "Coudoux Velaux la Fare VB"}, {"team1": "US Cagnes VB", "score1": 25, "score2": 6, "team2": "Haute-Garonne VB", "winner": "US Cagnes VB"}]}, {"pool_name": "Nina Stojilijkovic", "standings": [{"rank": 1, "team": "AS Monaco VB", "pts": 9, "wins": 0, "losses": 0, "pts_scored": 75, "pts_conceded": 52}, {"rank": 2, "team": "Gironde VB II", "pts": 8, "wins": 0, "losses": 1, "pts_scored": 71, "pts_conceded": 45}, {"rank": 3, "team": "Volley Club Marseillanais", "pts": 7, "wins": 0, "losses": 2, "pts_scored": 50, "pts_conceded": 69}, {"rank": 4, "team": "Ste-Maxime Cogolin Volley", "pts": 6, "wins": 0, "losses": 3, "pts_scored": 45, "pts_conceded": 75}], "matches": [{"team1": "Ste-Maxime Cogolin Volley", "score1": 19, "score2": 25, "team2": "Volley Club Marseillanais", "winner": "Volley Club Marseillanais"}, {"team1": "AS Monaco VB", "score1": 25, "score2": 21, "team2": "Gironde VB II", "winner": "AS Monaco VB"}, {"team1": "AS Monaco VB", "score1": 25, "score2": 16, "team2": "Volley Club Marseillanais", "winner": "AS Monaco VB"}, {"team1": "Gironde VB II", "score1": 25, "score2": 11, "team2": "Ste-Maxime Cogolin Volley", "winner": "Gironde VB II"}, {"team1": "Volley Club Marseillanais", "score1": 9, "score2": 25, "team2": "Gironde VB II", "winner": "Gironde VB II"}, {"team1": "Ste-Maxime Cogolin Volley", "score1": 15, "score2": 25, "team2": "AS Monaco VB", "winner": "AS Monaco VB"}]}], "t2_pools": [{"pool_name": "Gaby Guimaraes", "standings": [{"rank": 1, "team": "AS Monaco VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 2, "team": "Montélimar VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 3, "team": "St-Denis Olympique la Réunion", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}], "matches": [{"team1": "AS Monaco VB", "score1": 0, "score2": 0, "team2": "St-Denis Olympique la Réunion", "winner": null}, {"team1": "Montélimar VB", "score1": 0, "score2": 0, "team2": "AS Monaco VB", "winner": null}, {"team1": "St-Denis Olympique la Réunion", "score1": 0, "score2": 0, "team2": "Montélimar VB", "winner": null}]}, {"pool_name": "Zhu Ting", "standings": [{"rank": 1, "team": "US Cagnes VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 2, "team": "Istres Provence Volley", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 3, "team": "Arago de Sète", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}], "matches": [{"team1": "US Cagnes VB", "score1": 0, "score2": 0, "team2": "Istres Provence Volley", "winner": null}, {"team1": "Arago de Sète", "score1": 0, "score2": 0, "team2": "US Cagnes VB", "winner": null}, {"team1": "Istres Provence Volley", "score1": 0, "score2": 0, "team2": "Arago de Sète", "winner": null}]}, {"pool_name": "Paola Egonu", "standings": [{"rank": 1, "team": "VC Gruissan", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 2, "team": "Gironde VB I", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 3, "team": "Gironde VB II", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}], "matches": [{"team1": "VC Gruissan", "score1": 0, "score2": 0, "team2": "Gironde VB I", "winner": null}, {"team1": "Gironde VB II", "score1": 0, "score2": 0, "team2": "VC Gruissan", "winner": null}, {"team1": "Gironde VB I", "score1": 0, "score2": 0, "team2": "Gironde VB II", "winner": null}]}, {"pool_name": "Kathryn Plummer", "standings": [{"rank": 1, "team": "Racing Club de Cannes", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 2, "team": "Coudoux Velaux la Fare VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 3, "team": "US Aubenas VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}], "matches": [{"team1": "Racing Club de Cannes", "score1": 0, "score2": 0, "team2": "US Aubenas VB", "winner": null}, {"team1": "Coudoux Velaux la Fare VB", "score1": 0, "score2": 0, "team2": "Racing Club de Cannes", "winner": null}, {"team1": "US Aubenas VB", "score1": 0, "score2": 0, "team2": "Coudoux Velaux la Fare VB", "winner": null}]}, {"pool_name": "Melissa Vargas", "standings": [{"rank": 1, "team": "Mandelieu la Napoule VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 2, "team": "Jurançon Chapelle de Rousse Volley", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 3, "team": "Volley Beaucaire Tarascon le Grès", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}], "matches": [{"team1": "Mandelieu la Napoule VB", "score1": 0, "score2": 0, "team2": "Volley Beaucaire Tarascon le Grès", "winner": null}, {"team1": "Jurançon Chapelle de Rousse Volley", "score1": 0, "score2": 0, "team2": "Mandelieu la Napoule VB", "winner": null}, {"team1": "Volley Beaucaire Tarascon le Grès", "score1": 0, "score2": 0, "team2": "Jurançon Chapelle de Rousse Volley", "winner": null}]}, {"pool_name": "Joanna Wolosz", "standings": [{"rank": 1, "team": "Aix UC Volley-Ball", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 2, "team": "Volero le Cannet Côte d'Azur", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 3, "team": "Béziers Volley", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}], "matches": [{"team1": "Aix UC Volley-Ball", "score1": 0, "score2": 0, "team2": "Volero le Cannet Côte d'Azur", "winner": null}, {"team1": "Béziers Volley", "score1": 0, "score2": 0, "team2": "Aix UC Volley-Ball", "winner": null}, {"team1": "Volero le Cannet Côte d'Azur", "score1": 0, "score2": 0, "team2": "Béziers Volley", "winner": null}]}, {"pool_name": "Monica De Gennaro", "standings": [{"rank": 1, "team": "Bouc Bel Air VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 2, "team": "Draguignan Var VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 3, "team": "Fréjus Var Volley", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}], "matches": [{"team1": "Draguignan Var VB", "score1": 0, "score2": 0, "team2": "Fréjus Var Volley", "winner": null}, {"team1": "Bouc Bel Air VB", "score1": 0, "score2": 0, "team2": "Draguignan Var VB", "winner": null}, {"team1": "Fréjus Var Volley", "score1": 0, "score2": 0, "team2": "Bouc Bel Air VB", "winner": null}]}, {"pool_name": "Sarina Koga", "standings": [{"rank": 1, "team": "ALN Bras Panon VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 2, "team": "ASBAM Montpellier Volley", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 3, "team": "Rive Sud VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}], "matches": [{"team1": "ALN Bras Panon VB", "score1": 0, "score2": 0, "team2": "Rive Sud VB", "winner": null}, {"team1": "ASBAM Montpellier Volley", "score1": 0, "score2": 0, "team2": "ALN Bras Panon VB", "winner": null}, {"team1": "Rive Sud VB", "score1": 0, "score2": 0, "team2": "ASBAM Montpellier Volley", "winner": null}]}, {"pool_name": "Isabelle Haak", "standings": [{"rank": 1, "team": "Vitrolles Sport VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 2, "team": "Croix d'Argent Montpellier", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 3, "team": "AS VB Marigny-le-Chatel", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 4, "team": "Marignane VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}], "matches": [{"team1": "AS VB Marigny-le-Chatel", "score1": 0, "score2": 0, "team2": "Vitrolles Sport VB", "winner": null}, {"team1": "Croix d'Argent Montpellier", "score1": 0, "score2": 0, "team2": "Marignane VB", "winner": null}, {"team1": "Croix d'Argent Montpellier", "score1": 0, "score2": 0, "team2": "Vitrolles Sport VB", "winner": null}, {"team1": "Marignane VB", "score1": 0, "score2": 0, "team2": "AS VB Marigny-le-Chatel", "winner": null}, {"team1": "Vitrolles Sport VB", "score1": 0, "score2": 0, "team2": "Marignane VB", "winner": null}, {"team1": "AS VB Marigny-le-Chatel", "score1": 0, "score2": 0, "team2": "Croix d'Argent Montpellier", "winner": null}]}, {"pool_name": "Agnieszka Korneluk", "standings": [{"rank": 1, "team": "Volley Pradétan Gardéen", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 2, "team": "VC Hyères-Pierrefeu la Londe", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 3, "team": "Marie-Galante VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 4, "team": "Pays de Grasse VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}], "matches": [{"team1": "Pays de Grasse VB", "score1": 0, "score2": 0, "team2": "VC Hyères-Pierrefeu la Londe", "winner": null}, {"team1": "Volley Pradétan Gardéen", "score1": 0, "score2": 0, "team2": "Marie-Galante VB", "winner": null}, {"team1": "Volley Pradétan Gardéen", "score1": 0, "score2": 0, "team2": "VC Hyères-Pierrefeu la Londe", "winner": null}, {"team1": "Marie-Galante VB", "score1": 0, "score2": 0, "team2": "Pays de Grasse VB", "winner": null}, {"team1": "VC Hyères-Pierrefeu la Londe", "score1": 0, "score2": 0, "team2": "Marie-Galante VB", "winner": null}, {"team1": "Pays de Grasse VB", "score1": 0, "score2": 0, "team2": "Volley Pradétan Gardéen", "winner": null}]}, {"pool_name": "Tijana Boskovic", "standings": [{"rank": 1, "team": "Saint-Raphaël Volley", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 2, "team": "Haute-Garonne VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 3, "team": "AS l'Union VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 4, "team": "Muret VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}], "matches": [{"team1": "Saint-Raphaël Volley", "score1": 0, "score2": 0, "team2": "Haute-Garonne VB", "winner": null}, {"team1": "AS l'Union VB", "score1": 0, "score2": 0, "team2": "Muret VB", "winner": null}, {"team1": "AS l'Union VB", "score1": 0, "score2": 0, "team2": "Haute-Garonne VB", "winner": null}, {"team1": "Muret VB", "score1": 0, "score2": 0, "team2": "Saint-Raphaël Volley", "winner": null}, {"team1": "Haute-Garonne VB", "score1": 0, "score2": 0, "team2": "Muret VB", "winner": null}, {"team1": "Saint-Raphaël Volley", "score1": 0, "score2": 0, "team2": "AS l'Union VB", "winner": null}]}, {"pool_name": "Alessia Orro", "standings": [{"rank": 1, "team": "Ste-Maxime Cogolin Volley", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 2, "team": "Volley Club Marseillanais", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 3, "team": "Nîmes VB", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}, {"rank": 4, "team": "Les Genêts de Mesplède", "pts": 0, "wins": 0, "losses": 0, "pts_scored": 0, "pts_conceded": 0}], "matches": [{"team1": "Volley Club Marseillanais", "score1": 0, "score2": 0, "team2": "Ste-Maxime Cogolin Volley", "winner": null}, {"team1": "Les Genêts de Mesplède", "score1": 0, "score2": 0, "team2": "Nîmes VB", "winner": null}, {"team1": "Les Genêts de Mesplède", "score1": 0, "score2": 0, "team2": "Ste-Maxime Cogolin Volley", "winner": null}, {"team1": "Nîmes VB", "score1": 0, "score2": 0, "team2": "Volley Club Marseillanais", "winner": null}, {"team1": "Ste-Maxime Cogolin Volley", "score1": 0, "score2": 0, "team2": "Nîmes VB", "winner": null}, {"team1": "Volley Club Marseillanais", "score1": 0, "score2": 0, "team2": "Les Genêts de Mesplède", "winner": null}]}]}, "final_m": [{"match": 1, "phase": "1/8ème de Finale", "team1": "Volley St-Vitois", "score1": null, "score2": null, "team2": "Fréjus Var Volley", "winner": null}, {"match": 2, "phase": "1/8ème de Finale", "team1": "Gironde VB I", "score1": null, "score2": null, "team2": "Marignane VB", "winner": null}, {"match": 3, "phase": "1/8ème de Finale", "team1": "Mougins Côte d'Azur VB", "score1": null, "score2": null, "team2": "Mandelieu la Napoule VB", "winner": null}, {"match": 4, "phase": "1/8ème de Finale", "team1": "ASBAM Montpellier Volley", "score1": null, "score2": null, "team2": "ALN Bras Panon VB", "winner": null}, {"match": 5, "phase": "1/8ème de Finale", "team1": "VB Club St-Leu", "score1": null, "score2": null, "team2": "AS de la Vallée de la Sauer", "winner": null}, {"match": 6, "phase": "1/8ème de Finale", "team1": "Gironde VB II", "score1": null, "score2": null, "team2": "Salon Volley", "winner": null}, {"match": 7, "phase": "1/8ème de Finale", "team1": "Arago de Sète I", "score1": null, "score2": null, "team2": "Muret VB", "winner": null}, {"match": 8, "phase": "1/8ème de Finale", "team1": "Volley Beaucaire Tarascon le Grès", "score1": null, "score2": null, "team2": "Meudon Chaville Sèvres VB", "winner": null}, {"match": 9, "phase": "Places 17  à 24", "team1": "Touvet VB", "score1": null, "score2": null, "team2": "Pays de Grasse VB", "winner": null}, {"match": 10, "phase": "Places 17  à 24", "team1": "St-Louis Phoenix Volley I", "score1": null, "score2": null, "team2": "Aix UC Volley-Ball", "winner": null}, {"match": 11, "phase": "Places 17  à 24", "team1": "AS l'Union VB", "score1": null, "score2": null, "team2": "AS Cannes VB", "winner": null}, {"match": 12, "phase": "Places 17  à 24", "team1": "Avignon VB", "score1": null, "score2": null, "team2": "Bouc Bel Air VB", "winner": null}, {"match": 13, "phase": "Places 25 à 28", "team1": "Aubagne-Carnoux VB", "score1": null, "score2": null, "team2": "VC Hyères-Pierrefeu la Londe", "winner": null}, {"match": 14, "phase": "Places 25 à 28", "team1": "VB Club Clermontais", "score1": null, "score2": null, "team2": "US des Aigles Blancs de St Paul", "winner": null}, {"match": 15, "phase": "Places 29 à 32", "team1": "Draguignan Var VB", "score1": null, "score2": null, "team2": "US Pontet Volley Avenir", "winner": null}, {"match": 16, "phase": "Places 29 à 32", "team1": "Strasbourg UC Volley", "score1": null, "score2": null, "team2": "Nîmes VB", "winner": null}, {"match": 17, "phase": "Places 33 à 36", "team1": "Montpellier Croix d'Argent Volley", "score1": null, "score2": null, "team2": "US Aubenas VB", "winner": null}, {"match": 18, "phase": "Places 33 à 36", "team1": "VB Ollioulais", "score1": null, "score2": null, "team2": "Vidauban VB", "winner": null}, {"match": 19, "phase": "Places 37 à 40", "team1": "Arago de Sète II", "score1": null, "score2": null, "team2": "St-Louis Phoenix Volley II", "winner": null}, {"match": 20, "phase": "Places 37 à 40", "team1": "AS VB Marigny-le-Chatel", "score1": null, "score2": null, "team2": "Haute-Garonne VB", "winner": null}, {"match": 21, "phase": "1/4 de finales", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 22, "phase": "1/4 de finales", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 23, "phase": "1/4 de finales", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 24, "phase": "1/4 de finales", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 25, "phase": "Place de 9 à 16", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 26, "phase": "Place de 9 à 16", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 27, "phase": "Place de 9 à 16", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 28, "phase": "Place de 9 à 16", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 29, "phase": "Places 17 à 20", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 30, "phase": "Places 17 à 20", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 31, "phase": "Places 21 à 24", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 32, "phase": "Places 21 à 24", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 33, "phase": "1/2 Finale", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 34, "phase": "1/2 Finale", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 35, "phase": "Place 5 à 8", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 36, "phase": "Place 5 à 8", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 37, "phase": "Places 9 à 12", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 38, "phase": "Places 9 à 12", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 39, "phase": "Places 13 à 16", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 40, "phase": "Places 13 à 16", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 41, "phase": "Places 39 / 40", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 42, "phase": "Places 37 / 38", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 43, "phase": "Places 35 / 36", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 44, "phase": "Places 33 / 34", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 45, "phase": "Places 31 / 32", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 46, "phase": "Places 29 / 30", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 47, "phase": "Places 27 / 28", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 48, "phase": "Places 25 / 26", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 49, "phase": "Places 23 / 24", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 50, "phase": "Places 21 / 22", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 51, "phase": "Places 19 / 20", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 52, "phase": "Places 17 / 18", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 53, "phase": "Places 15 / 16", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 54, "phase": "Places 13 / 14", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 55, "phase": "Places 11 / 12", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 56, "phase": "Places 9 / 10", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 57, "phase": "Places 7 / 8", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 58, "phase": "Places 5 / 6", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 59, "phase": "Places 3 / 4", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 60, "phase": "FINALE", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}], "final_f": [{"match": 1, "phase": "1/8ème de Finale", "team1": "Montélimar VB", "score1": null, "score2": null, "team2": "Rive Sud VB", "winner": null}, {"match": 2, "phase": "1/8ème de Finale", "team1": "US Cagnes VB", "score1": null, "score2": null, "team2": "Bouc Bel Air VB", "winner": null}, {"match": 3, "phase": "1/8ème de Finale", "team1": "VC Gruissan", "score1": null, "score2": null, "team2": "Aix UC Volley-Ball", "winner": null}, {"match": 4, "phase": "1/8ème de Finale", "team1": "Coudoux Velaux la Fare VB", "score1": null, "score2": null, "team2": "Mandelieu la Napoule VB", "winner": null}, {"match": 5, "phase": "1/8ème de Finale", "team1": "Jurançon Chapelle de Rousse Volley", "score1": null, "score2": null, "team2": "Racing Club de Cannes", "winner": null}, {"match": 6, "phase": "1/8ème de Finale", "team1": "Volero le Cannet Côte d'Azur", "score1": null, "score2": null, "team2": "Gironde VB I", "winner": null}, {"match": 7, "phase": "1/8ème de Finale", "team1": "Draguignan Var VB", "score1": null, "score2": null, "team2": "Arago de Sète", "winner": null}, {"match": 8, "phase": "1/8ème de Finale", "team1": "ASBAM Montpellier Volley", "score1": null, "score2": null, "team2": "St-Denis Olympique la Réunion", "winner": null}, {"match": 9, "phase": "Places 17 à 24", "team1": "AS Monaco VB", "score1": null, "score2": null, "team2": "ALN Bras Panon VB", "winner": null}, {"match": 10, "phase": "Places 17 à 24", "team1": "Istres Provence Volley", "score1": null, "score2": null, "team2": "Fréjus Var Volley", "winner": null}, {"match": 11, "phase": "Places 17 à 24", "team1": "Gironde VB II", "score1": null, "score2": null, "team2": "Béziers Volley", "winner": null}, {"match": 12, "phase": "Places 17 à 24", "team1": "US Aubenas VB", "score1": null, "score2": null, "team2": "Volley Beaucaire Tarascon le Grès", "winner": null}, {"match": 13, "phase": "Places 25 à 28", "team1": "Croix d'Argent Montpellier", "score1": null, "score2": null, "team2": "Les Genêts de Mesplède", "winner": null}, {"match": 14, "phase": "Places 25 à 28", "team1": "Marie-Galante VB", "score1": null, "score2": null, "team2": "AS l'Union VB", "winner": null}, {"match": 15, "phase": "Places 29 à 32", "team1": "Vitrolles Sport VB", "score1": null, "score2": null, "team2": "Nîmes VB", "winner": null}, {"match": 16, "phase": "Places 29 à 32", "team1": "Pays de Grasse VB", "score1": null, "score2": null, "team2": "Saint-Raphaël Volley", "winner": null}, {"match": 17, "phase": "Places 33 à 36", "team1": "AS VB Marigny-le-Chatel", "score1": null, "score2": null, "team2": "Volley Club Marseillanais", "winner": null}, {"match": 18, "phase": "Places 33 à 36", "team1": "Volley Pradétan Gardéen", "score1": null, "score2": null, "team2": "Muret VB", "winner": null}, {"match": 19, "phase": "Places 37 à 40", "team1": "Marignane VB", "score1": null, "score2": null, "team2": "Ste-Maxime Cogolin Volley", "winner": null}, {"match": 20, "phase": "Places 37 à 40", "team1": "VC Hyères-Pierrefeu la Londe", "score1": null, "score2": null, "team2": "Haute-Garonne VB", "winner": null}, {"match": 21, "phase": "1/4 de finales", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 22, "phase": "1/4 de finales", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 23, "phase": "1/4 de finales", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 24, "phase": "1/4 de finales", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 25, "phase": "Places 9 à 16", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 26, "phase": "Places 9 à 16", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 27, "phase": "Places 9 à 16", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 28, "phase": "Places 9 à 16", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 29, "phase": "Places 17 à 20", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 30, "phase": "Places 17 à 20", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 31, "phase": "Places 21 à 24", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 32, "phase": "Places 21 à 24", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 33, "phase": "1/2 Finale", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 34, "phase": "1/2 Finale", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 35, "phase": "Place 5 à 8", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 36, "phase": "Place 5 à 8", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 37, "phase": "Places 9 à 12", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 38, "phase": "Places 9 à 12", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 39, "phase": "Places 13 à 16", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 40, "phase": "Places 13 à 16", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 41, "phase": "Places 39 / 40", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 42, "phase": "Places 37 / 38", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 43, "phase": "Places 35 / 36", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 44, "phase": "Places 33 / 34", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 45, "phase": "Places 31 / 32", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 46, "phase": "Places 29 / 30", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 47, "phase": "Places 27 / 28", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 48, "phase": "Places 25 / 26", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 49, "phase": "Places 23 / 24", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 50, "phase": "Places 21 / 22", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 51, "phase": "Places 19 / 20", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 52, "phase": "Places 17 / 18", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 53, "phase": "Places 15 / 16", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 54, "phase": "Places 13 / 14", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 55, "phase": "Places 11 / 12", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 56, "phase": "Places 9 / 10", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 57, "phase": "Places 7 / 8", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 58, "phase": "Places 5 / 6", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 59, "phase": "Places 3 / 4", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}, {"match": 60, "phase": "FINALE", "team1": "", "score1": null, "score2": null, "team2": "", "winner": null}], "classement_m": [], "classement_f": [], "stats": {"teams_m": 40, "teams_f": 40, "pools_m": 22, "pools_f": 22}};
+
+// Apply scores from DB to data object
+function applyScores(data, scores) {
+  scores.forEach(sc => {
+    // Ignore T1 scores - they are baked into the HTML from Excel
+    if (sc.tour === 't1') return;
+    // Finale bracket matches
+    if (sc.tour === 'finale') {
+      const matches = sc.gender === 'masculine' ? data.final_m : data.final_f;
+      const match = matches[sc.match_idx];
+      if (!match) return;
+      match.score1 = sc.score1; match.score2 = sc.score2;
+      match.winner = sc.score1 > sc.score2 ? match.team1 : (sc.score2 > sc.score1 ? match.team2 : null);
+      return;
+    }
+    // Pool matches - find by team names if available, fallback to index
+    const pools = data[sc.gender][sc.tour + '_pools'];
+    const pool = pools.find(p => p.pool_name === sc.pool_name);
+    if (!pool) return;
+    let match = null;
+    // Try to find by team names first (robust against reordering)
+    if (sc.team1 && sc.team2) {
+      match = pool.matches.find(m =>
+        (m.team1 === sc.team1 && m.team2 === sc.team2) ||
+        (m.team1 === sc.team2 && m.team2 === sc.team1)
+      );
+      // If found but teams are swapped, swap scores
+      if (match && match.team1 === sc.team2) {
+        const tmp = sc.score1; sc.score1 = sc.score2; sc.score2 = tmp;
+      }
+    }
+    // Fallback to index
+    if (!match) match = pool.matches[sc.match_idx];
+    if (!match) return;
+    match.score1 = sc.score1;
+    match.score2 = sc.score2;
+    match.winner = sc.score1 > sc.score2 ? match.team1 : (sc.score2 > sc.score1 ? match.team2 : null);
+  });
+  recalcAllStandings(data);
+  // Propagate qualifications from already-scored matches
+  if (typeof QUALIFICATION_RULES_M !== 'undefined' && data.final_m) {
+    data.final_m.forEach((m, idx) => {
+      if (!m.winner) return;
+      const rule = QUALIFICATION_RULES_M[idx];
+      if (!rule) return;
+      const winner = m.winner;
+      const loser = m.team1 === winner ? m.team2 : m.team1;
+      const wArr = rule.winner.arr === 'final_m' ? data.final_m : data.final_f;
+      const lArr = rule.loser.arr === 'final_m' ? data.final_m : data.final_f;
+      if (wArr[rule.winner.idx]) wArr[rule.winner.idx][rule.winner.team] = winner;
+      if (lArr[rule.loser.idx]) lArr[rule.loser.idx][rule.loser.team] = loser;
+    });
+  }
+}
+
+function recalcPool(pool) {
+  const teams = {};
+  pool.standings.forEach(s => {
+    teams[s.team] = { rank: s.rank, team: s.team, pts: 0, wins: 0, losses: 0, pts_scored: 0, pts_conceded: 0 };
+  });
+  pool.matches.forEach(m => {
+    if (!m.winner) return;
+    if (!(m.team1 in teams) || !(m.team2 in teams)) return;
+    teams[m.team1].pts_scored += m.score1 || 0;
+    teams[m.team1].pts_conceded += m.score2 || 0;
+    teams[m.team2].pts_scored += m.score2 || 0;
+    teams[m.team2].pts_conceded += m.score1 || 0;
+    if (m.winner === m.team1) {
+      teams[m.team1].wins++; teams[m.team1].pts += 3;
+      teams[m.team2].losses++; teams[m.team2].pts += 2;
+    } else if (m.winner === m.team2) {
+      teams[m.team2].wins++; teams[m.team2].pts += 3;
+      teams[m.team1].losses++; teams[m.team1].pts += 2;
+    }
+  });
+  const sorted = Object.values(teams).sort((a, b) => {
+    if (b.pts !== a.pts) return b.pts - a.pts;
+    const coeffA = a.pts_conceded > 0 ? a.pts_scored / a.pts_conceded : a.pts_scored;
+    const coeffB = b.pts_conceded > 0 ? b.pts_scored / b.pts_conceded : b.pts_scored;
+    return coeffB - coeffA;
+  });
+  sorted.forEach((s, i) => s.rank = i + 1);
+  pool.standings = sorted;
+}
+
+function recalcAllStandings(data) {
+  ['masculine', 'feminine'].forEach(g => {
+    ['t1', 't2'].forEach(t => {
+      data[g][t + '_pools'].forEach(pool => recalcPool(pool));
+    });
+  });
+}
+
+function freshData() { return JSON.parse(JSON.stringify(BASE_DATA)); }
+
+let DATA = freshData();
+
+// ======================== NAVIGATION ========================
+function showTab(name, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ======================== POOL RENDERING ========================
+const POOL_NAMES_M_T1 = ["Ervean N'Gapeth",'Benjamin Toniutti','Timothée Carle','Barthélémy Chinenyeze','Trévor Clévenot','Antoine Brizard','Jenia Grebennikov','Joris Seddik','Jean Patry','Kevin Tillie'];
+const POOL_NAMES_M_T2 = ['Tomasz Fornal','Alessandro Michieletto','Yuki Ishikawa','Taylor Averill','Wilfredo Leon','Toncek Stern','Wallace De Souza','Nimir Abdel-Aziz','Pawel Zatorski','Simone Gianelli','Ricardo Lucarelli','Jakub Kochanowski'];
+const POOL_NAMES_F_T1 = ['Amandine Giardino','Amandha Sylves','Amélie Rotar','Juliette Gelin','Emilie Respaut','Maeva Schalk','Lucille Gicquel','Héléna Cazaute','Iman Ndiaye','Nina Stojilijkovic'];
+const POOL_NAMES_F_T2 = ['Gaby Guimaraes','Zhu Ting','Paola Egonu','Kathryn Plummer','Melissa Vargas','Joanna Wolosz','Monica De Gennaro','Sarina Koga','Isabelle Haak','Agnieszka Korneluk','Tijana Boskovic','Alessia Orro'];
+
+function getLetter(poolName, nameList) {
+  const idx = nameList.indexOf(poolName);
+  return idx >= 0 ? 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[idx] : '?';
+}
+
+function buildPoolCard(pool, gender, nameList) {
+  const isM = gender === 'm';
+  const letter = getLetter(pool.pool_name, nameList);
+  const cardId = 'pool-' + pool.pool_name.replace(/[^a-z0-9]/gi, '');
+  const hasResults = pool.matches.some(m => m.winner !== null);
+
+  let rows = '';
+  pool.standings.forEach((s, i) => {
+    const rc = ['rank-1','rank-2','rank-3',''][Math.min(i,3)];
+    const noData = s.pts === 0 && s.wins === 0;
+    rows += `<tr class="${rc}">
+      <td>${s.rank}</td>
+      <td style="font-weight:500;text-align:left">${s.team}</td>
+      <td class="pts">${noData && !hasResults ? '–' : s.pts}</td>
+      <td>${noData && !hasResults ? '–' : s.wins+'V '+s.losses+'D'}</td>
+      <td>${noData && !hasResults ? '–' : s.pts_scored+'/'+s.pts_conceded}</td>
+    </tr>`;
+  });
+
+  let matchHtml = '';
+  pool.matches.forEach(m => {
+    if (m.winner) {
+      const w1 = m.winner === m.team1;
+      matchHtml += `<div class="match-row">
+        <span class="match-team ${w1?'winner':''}">${m.team1}</span>
+        <span class="match-score"><span class="${w1?'score-win':''}">${m.score1}</span> – <span class="${!w1?'score-win':''}">${m.score2}</span></span>
+        <span class="match-team ${!w1?'winner':''}" style="text-align:right">${m.team2}</span>
+      </div>`;
+    } else {
+      matchHtml += `<div class="match-row">
+        <span class="match-team">${m.team1}</span>
+        <span class="match-pending">à jouer</span>
+        <span class="match-team" style="text-align:right">${m.team2}</span>
+      </div>`;
+    }
+  });
+
+  return `<div class="pool-card" id="${cardId}">
+    <div class="pool-header" onclick="togglePool('${cardId}')">
+      <div class="pool-letter ${isM?'m':'f'}">${letter}</div>
+      <div>
+        <div style="font-weight:600;font-size:14px;">Poule ${letter}</div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">${pool.pool_name}</div>
+      </div>
+      ${hasResults ? '<span style="margin-left:8px;font-size:10px;background:rgba(34,197,94,0.15);color:#22c55e;padding:2px 7px;border-radius:10px;border:1px solid rgba(34,197,94,0.3);">En cours</span>' : ''}
+      <div class="pool-toggle">▼</div>
+    </div>
+    <table class="standings-table">
+      <thead><tr><th>#</th><th>Équipe</th><th>Pts</th><th>B/D</th><th>M P/C</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <div class="matches-section">
+      <div class="matches-list open" id="${cardId}-matches">${matchHtml}</div>
+    </div>
+  </div>`;
+}
+
+function togglePool(id) { document.getElementById(id).classList.toggle('open'); }
+function toggleMatches(id) {
+  const el = document.getElementById(id);
+  const btn = el.previousElementSibling;
+  el.classList.toggle('open');
+  btn.textContent = el.classList.contains('open') ? '▼ Masquer les matchs' : '▶ Voir les 6 matchs';
+}
+
+function getBest3(pools) {
+  // Collect all 3rd-place teams from each pool, sort by coeff
+  const thirds = [];
+  pools.forEach(pool => {
+    const s = pool.standings.find(s => s.rank === 3);
+    if (s && (s.pts > 0 || s.pts_scored > 0)) {
+      const coeff = s.pts_conceded > 0 ? s.pts_scored / s.pts_conceded : s.pts_scored;
+      thirds.push({ ...s, pool: pool.pool_name, coeff });
+    }
+  });
+  thirds.sort((a, b) => {
+    if (b.pts !== a.pts) return b.pts - a.pts;
+    return b.coeff - a.coeff;
+  });
+  return thirds;
+}
+
+function renderBest3(pools, blockId) {
+  const block = document.getElementById(blockId);
+  if (!block) return;
+  const thirds = getBest3(pools);
+  if (thirds.length === 0) {
+    block.innerHTML = '<div class="empty-state"><div class="empty-icon">⏳</div>En attente des résultats du 1er tour</div>';
+    return;
+  }
+  const medals = ['🥇','🥈','🥉'];
+  let rows = thirds.map((t, i) => `<tr>
+    <td class="rank-num" style="padding:9px 16px;font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;color:${i===0?'var(--gold)':i===1?'var(--silver)':i===2?'var(--bronze)':'var(--text-muted)'};width:36px;">${medals[i] || (i+1)}</td>
+    <td style="padding:9px 16px;font-weight:500;font-size:13px;">${t.team}</td>
+    <td style="padding:9px 16px;font-size:12px;color:var(--text-muted);">Poule ${t.pool}</td>
+    <td style="padding:9px 16px;font-weight:700;color:var(--accent);font-size:13px;">${t.pts} pts</td>
+    <td style="padding:9px 16px;font-size:12px;color:var(--text-muted);">${t.wins}V ${t.losses}D</td>
+    <td style="padding:9px 16px;font-size:12px;color:var(--text-muted);">${t.pts_scored}/${t.pts_conceded}</td>
+  </tr>`).join('');
+  block.innerHTML = `<table style="width:100%;border-collapse:collapse;">
+    <thead><tr style="border-bottom:1px solid var(--border);">
+      <th style="padding:8px 16px;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);text-align:left;">#</th>
+      <th style="padding:8px 16px;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);text-align:left;">Équipe</th>
+      <th style="padding:8px 16px;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);text-align:left;">Poule</th>
+      <th style="padding:8px 16px;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);">Pts</th>
+      <th style="padding:8px 16px;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);">B/D</th>
+      <th style="padding:8px 16px;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);">M P/C</th>
+    </tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
+}
+
+function buildBracketSection(matches, gender) {
+  if (!matches || matches.length === 0) return '<div class="empty-state"><div class="empty-icon">⏳</div>Résultats à venir</div>';
+  const isF = gender === 'f';
+  const groups = {};
+  matches.forEach(m => { if (!groups[m.phase]) groups[m.phase] = []; groups[m.phase].push(m); });
+  const order = ['1/8ème de Finale','1/4 de finales','1/2 Finale','FINALE',
+    'Places 3 et 4','Places 5 à 8','Place de 9 à 16','Places 9 à 16','Places 9 à 12',
+    'Places 13 à 16','Places 17 à 24','Places 17 à 20','Places 21 à 24',
+    'Places 25 à 28','Places 25 à 32','Places 29 à 32','Places 33 à 36','Places 37 à 40'];
+  let html = '';
+  [...new Set([...order.filter(p => groups[p]), ...Object.keys(groups)])].forEach(phase => {
+    if (!groups[phase]) return;
+    html += `<div class="bracket-section"><div class="bracket-title">${phase}</div><div class="bracket-grid">`;
+    groups[phase].forEach(m => {
+      const w1 = m.winner === m.team1, w2 = m.winner === m.team2;
+      html += `<div class="bracket-match">
+        <div class="bracket-match-num">Match ${m.match}</div>
+        <div class="bracket-team ${w1 ? 'winner' + (isF ? ' f' : '') : ''}">
+          <span>${m.team1 || 'À déterminer'}</span>
+          ${m.score1 !== null ? `<span class="bracket-team-score">${m.score1}</span>` : ''}
+        </div>
+        <div class="bracket-team ${w2 ? 'winner' + (isF ? ' f' : '') : ''}">
+          <span>${m.team2 || 'À déterminer'}</span>
+          ${m.score2 !== null ? `<span class="bracket-team-score">${m.score2}</span>` : ''}
+        </div>
+      </div>`;
+    });
+    html += '</div></div>';
+  });
+  return html;
+}
+
+function renderT3() {
+  document.getElementById('t3-masc-grid').innerHTML = buildBracketSection(DATA.t3_m, 'm');
+  document.getElementById('t3-mf-grid').innerHTML = buildBracketSection(DATA.t3_mf, 'm');
+  document.getElementById('t3-fem-grid').innerHTML = buildBracketSection(DATA.t3_f, 'f');
+}
+
+function renderAllPools() {
+  ['t1-masc','t1-fem','t2-masc','t2-fem'].forEach(id => {
+    document.getElementById(id+'-grid').innerHTML = '';
+  });
+  DATA.masculine.t1_pools.forEach(p => document.getElementById('t1-masc-grid').insertAdjacentHTML('beforeend', buildPoolCard(p,'m',POOL_NAMES_M_T1)));
+  DATA.feminine.t1_pools.forEach(p => document.getElementById('t1-fem-grid').insertAdjacentHTML('beforeend', buildPoolCard(p,'f',POOL_NAMES_F_T1)));
+  DATA.masculine.t2_pools.forEach(p => document.getElementById('t2-masc-grid').insertAdjacentHTML('beforeend', buildPoolCard(p,'m',POOL_NAMES_M_T2)));
+  DATA.feminine.t2_pools.forEach(p => document.getElementById('t2-fem-grid').insertAdjacentHTML('beforeend', buildPoolCard(p,'f',POOL_NAMES_F_T2)));
+  renderBest3(DATA.masculine.t1_pools, 'best3-masc-block');
+  renderBest3(DATA.feminine.t1_pools, 'best3-fem-block');
+}
+
+// ======================== CLASSEMENT ========================
+function renderClassement() {
+  const medals = ['🥇','🥈','🥉'];
+  function buildTable(entries) {
+    if (!entries || entries.length === 0) return '<div class="empty-state"><div class="empty-icon">⏳</div>En attente de la fin du tournoi</div>';
+    let html = '<table class="rank-table"><tbody>';
+    entries.forEach((e,i) => {
+      html += `<tr><td class="rank-num">${medals[i]||e.rank}</td><td style="font-weight:500">${e.team}</td></tr>`;
+    });
+    return html + '</tbody></table>';
+  }
+  document.getElementById('rank-masc-content').innerHTML = buildTable(DATA.classement_m);
+  document.getElementById('rank-fem-content').innerHTML = buildTable(DATA.classement_f);
+}
+
+// ======================== FINALES ========================
+function renderFinales() {
+  function buildFinals(matches, gender) {
+    if (!matches || matches.length === 0) return '<div class="empty-state"><div class="empty-icon">⏳</div>Résultats à venir</div>';
+    const isM = gender === 'm';
+    const groups = {};
+    matches.forEach(m => { if(!groups[m.phase]) groups[m.phase]=[]; groups[m.phase].push(m); });
+    // Official display order
+    const order = [
+      '1/8ème de Finale','Places 17  à 24','Places 17 à 24',
+      'Places 25 à 28','Places 29 à 32','Places 33 à 36','Places 37 à 40',
+      '1/4 de finales','1/4 de Finales','Place de 9 à 16','Places 9 à 16',
+      'Places 17 à 20','Places 21 à 24',
+      '1/2 Finale',
+      'Place 5 à 8','Places 9 à 12','Places 13 à 16',
+      'Places 39 / 40','Places 37 / 38','Places 35 / 36','Places 33 / 34',
+      'Places 31 / 32','Places 29 / 30','Places 27 / 28','Places 25 / 26',
+      'Places 23 / 24','Places 21 / 22','Places 19 / 20','Places 17 / 18',
+      'Places 15 / 16','Places 13 / 14','Places 11 / 12','Places 9 / 10',
+      'Places 7 / 8','Places 5 / 6','Places 3 / 4','FINALE'
+    ];
+    let html = '';
+    const seen = new Set();
+    order.forEach(phase => {
+      if (!groups[phase] || seen.has(phase)) return;
+      seen.add(phase);
+      // Use canonical phase name
+      const displayPhase = phase.replace('Places 17  à 24','Places 17 à 24').replace('1/4 de Finales','1/4 de Finales');
+      html += `<div class="bracket-section"><div class="bracket-title">${displayPhase}</div><div class="bracket-grid">`;
+      groups[phase].forEach(m => {
+        const w1 = m.winner === m.team1, w2 = m.winner === m.team2;
+        const ADET = '<span style="color:var(--text-muted);font-style:italic;font-size:11px;">À déterminer</span>';
+        const t1 = m.team1 ? m.team1 : ADET;
+        const t2 = m.team2 ? m.team2 : ADET;
+        html += `<div class="bracket-match">
+          <div class="bracket-match-num">Match ${m.match}</div>
+          <div class="bracket-team ${w1?'winner'+(isM?'':' f'):''}">
+            <span>${t1}</span>
+            ${m.score1!==null?`<span class="bracket-team-score">${m.score1}</span>`:''}
+          </div>
+          <div class="bracket-team ${w2?'winner'+(isM?'':' f'):''}">
+            <span>${t2}</span>
+            ${m.score2!==null?`<span class="bracket-team-score">${m.score2}</span>`:''}
+          </div>
+        </div>`;
+      });
+      html += '</div></div>';
+    });
+    return html || '<div class="empty-state"><div class="empty-icon">⏳</div>Résultats à venir</div>';
+  }
+  document.getElementById('finals-masc-content').innerHTML = buildFinals(DATA.final_m, 'm');
+  document.getElementById('finals-fem-content').innerHTML = buildFinals(DATA.final_f, 'f');
+}
+
+// ======================== SEARCH ========================
+function searchTeam(query) {
+  const q = query.toLowerCase().trim();
+  const container = document.getElementById('search-results');
+  if (q.length < 2) { container.innerHTML = ''; return; }
+  const found = {};
+  function search(pools, label, gender) {
+    pools.forEach(pool => {
+      pool.standings.forEach(s => {
+        if (s.team.toLowerCase().includes(q)) {
+          if (!found[s.team]) found[s.team] = { team: s.team, gender, appearances: [] };
+          found[s.team].appearances.push({ label, pool: pool.pool_name, rank: s.rank, pts: s.pts });
+        }
+      });
+    });
+  }
+  search(DATA.masculine.t1_pools,'1er Tour Masculin','m');
+  search(DATA.masculine.t2_pools,'2ème Tour Masculin','m');
+  search(DATA.feminine.t1_pools,'1er Tour Féminin','f');
+  search(DATA.feminine.t2_pools,'2ème Tour Féminin','f');
+  if (Object.keys(found).length === 0) { container.innerHTML = '<div style="color:var(--text-muted);padding:20px;text-align:center;">Aucune équipe trouvée</div>'; return; }
+  const rankM = DATA.classement_m.find(e => e.team.toLowerCase().includes(q));
+  const rankF = DATA.classement_f.find(e => e.team.toLowerCase().includes(q));
+  let html = `<div style="margin-bottom:12px;font-size:13px;color:var(--text-muted)">${Object.keys(found).length} équipe(s) trouvée(s)</div>`;
+  Object.values(found).forEach(t => {
+    const finalR = t.gender==='m' ? rankM : rankF;
+    html += `<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:12px;">
+      <div style="padding:12px 16px;background:var(--surface2);display:flex;align-items:center;gap:10px;">
+        <span style="font-size:20px">${t.gender==='m'?'🔵':'🩷'}</span>
+        <div>
+          <div style="font-weight:700;font-size:15px">${t.team}</div>
+          ${finalR?`<div style="font-size:12px;color:var(--accent);margin-top:2px">🏆 Classement final : ${finalR.rank}ème place</div>`:''}
+        </div>
+      </div>
+      <div style="padding:10px 16px">${t.appearances.map(a=>`<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--border);font-size:13px">
+        <span class="section-badge ${a.gender==='m'?'masc':'fem'}" style="flex-shrink:0">${a.label}</span>
+        <span>Poule <strong>${a.pool}</strong></span>
+        <span style="margin-left:auto;color:var(--accent);font-weight:700">${a.rank}e · ${a.pts} pts</span>
+      </div>`).join('')}</div>
+    </div>`;
+  });
+  container.innerHTML = html;
+}
+
+// ======================== ADMIN ========================
+const ADMIN_PASSWORD = 'cdvarvb';
+let adminLoggedIn = false;
+
+function toggleAdminPanel() {
+  document.getElementById('admin-overlay').classList.add('open');
+  if (adminLoggedIn) {
+    document.getElementById('admin-login-section').style.display = 'none';
+    document.getElementById('admin-form-section').classList.add('visible');
+    updateTourOptions();
+  }
+}
+function closeAdmin() { document.getElementById('admin-overlay').classList.remove('open'); }
+function closeAdminOnBg(e) { if (e.target === document.getElementById('admin-overlay')) closeAdmin(); }
+
+function doLogin() {
+  const pwd = document.getElementById('admin-pwd').value;
+  if (pwd === ADMIN_PASSWORD) {
+    adminLoggedIn = true;
+    document.getElementById('admin-login-section').style.display = 'none';
+    document.getElementById('admin-form-section').classList.add('visible');
+    document.getElementById('admin-toggle-btn').classList.add('active');
+    document.getElementById('admin-error').textContent = '';
+    updateTourOptions();
+  } else {
+    document.getElementById('admin-error').textContent = 'Mot de passe incorrect';
+  }
+}
+function doLogout() {
+  adminLoggedIn = false;
+  document.getElementById('admin-login-section').style.display = '';
+  document.getElementById('admin-form-section').classList.remove('visible');
+  document.getElementById('admin-pwd').value = '';
+  document.getElementById('admin-toggle-btn').classList.remove('active');
+  closeAdmin();
+}
+
+function updateTourOptions() { updatePoolOptions(); }
+
+function updatePoolOptions() {
+  const gender = document.getElementById('f-gender').value;
+  const tour = document.getElementById('f-tour').value;
+  const sel = document.getElementById('f-pool');
+  if (tour === 'finale') {
+    sel.innerHTML = '<option value="0">Phase Finale</option>';
+  } else {
+    const pools = DATA[gender === 'm' ? 'masculine' : 'feminine'][tour + '_pools'];
+    if (pools) sel.innerHTML = pools.map((p,i) => `<option value="${i}">${p.pool_name}</option>`).join('');
+  }
+  updateMatchOptions();
+}
+
+function updateMatchOptions() {
+  const gender = document.getElementById('f-gender').value;
+  const tour = document.getElementById('f-tour').value;
+  const poolVal = document.getElementById('f-pool').value;
+  const sel = document.getElementById('f-match');
+
+  if (tour === 'finale') {
+    const matches = gender === 'm' ? DATA.final_m : DATA.final_f;
+    sel.innerHTML = matches.map((m,i) => `<option value="${i}">Match ${m.match} · ${m.team1} vs ${m.team2}${m.winner?' ✓':''}</option>`).join('');
+  } else {
+    const poolIdx = parseInt(poolVal);
+    const pools = DATA[gender === 'm' ? 'masculine' : 'feminine'][tour + '_pools'];
+    const pool = pools && pools[poolIdx];
+    if (pool) sel.innerHTML = pool.matches.map((m,i) => `<option value="${i}">${m.team1} vs ${m.team2}${m.winner?' ✓':''}</option>`).join('');
+  }
+  updateScoreDisplay();
+}
+
+function getSelectedMatch() {
+  const gender = document.getElementById('f-gender').value;
+  const tour = document.getElementById('f-tour').value;
+  const poolVal = document.getElementById('f-pool').value;
+  const matchVal = document.getElementById('f-match').value;
+  const matchIdx = parseInt(matchVal);
+  if (tour === 'finale') {
+    const matches = gender === 'm' ? DATA.final_m : DATA.final_f;
+    return { match: matches[matchIdx], isFinale: true, gender, tour, matchIdx, pool: null, poolIdx: null };
+  }
+  const poolIdx = parseInt(poolVal);
+  const pool = DATA[gender === 'm' ? 'masculine' : 'feminine'][tour + '_pools'][poolIdx];
+  return { match: pool ? pool.matches[matchIdx] : null, isFinale: false, gender, tour, pool, poolIdx, matchIdx };
+}
+
+function updateScoreDisplay() {
+  const { match } = getSelectedMatch();
+  if (!match) return;
+  document.getElementById('f-team1-lbl').textContent = match.team1;
+  document.getElementById('f-team2-lbl').textContent = match.team2;
+  document.getElementById('f-score1').value = match.score1 || '';
+  document.getElementById('f-score2').value = match.score2 || '';
+}
+
+document.getElementById('f-match')?.addEventListener('change', updateScoreDisplay);
+
+async function saveScore() {
+  const gender = document.getElementById('f-gender').value;
+  const tour = document.getElementById('f-tour').value;
+  const s1 = parseInt(document.getElementById('f-score1').value);
+  const s2 = parseInt(document.getElementById('f-score2').value);
+  if (isNaN(s1) || isNaN(s2)) { alert('Veuillez saisir les deux scores'); return; }
+
+  const { match, pool, poolIdx, matchIdx, t3bracket, matchNum } = getSelectedMatch();
+  const gKey = gender === 'm' ? 'masculine' : 'feminine';
+
+  // Show saving indicator
+  const btn = document.querySelector('.btn-save');
+  btn.textContent = '⏳ Enregistrement...';
+  btn.disabled = true;
+
+  try {
+    const entry = (tour === 'finale')
+      ? { gender: gKey, tour: 'finale', pool_name: 'finale', match_idx: matchIdx, score1: s1, score2: s2, team1: match.team1, team2: match.team2 }
+      : { gender: gKey, tour, pool_name: pool.pool_name, match_idx: matchIdx, score1: s1, score2: s2, team1: match.team1, team2: match.team2 };
+    await saveScoreToDB(entry);
+
+    // Update local data
+    match.score1 = s1; match.score2 = s2;
+    match.winner = s1 > s2 ? match.team1 : (s2 > s1 ? match.team2 : null);
+    if (tour !== 'finale') recalcPool(pool);
+
+    // Propagate qualification if finale match
+    if (tour === 'finale') {
+      const gKey2 = gender === 'm' ? 'masculine' : 'feminine';
+      propagateQualification(gKey2, matchIdx);
+      await saveQualification(gKey2, matchIdx);
+    }
+
+    // Re-render
+    renderAllPools();
+    renderFinales();
+    document.getElementById('admin-success').classList.add('show');
+    setTimeout(() => document.getElementById('admin-success').classList.remove('show'), 3000);
+    updateMatchOptions();
+    document.getElementById('f-match').value = matchIdx;
+  } catch(e) {
+    alert('Erreur lors de la sauvegarde. Vérifiez votre connexion.');
+  } finally {
+    btn.textContent = '💾 Enregistrer le score';
+    btn.disabled = false;
+  }
+}
+
+
+async function deleteScore() {
+  const gender = document.getElementById('f-gender').value;
+  const tour = document.getElementById('f-tour').value;
+  const gKey = gender === 'm' ? 'masculine' : 'feminine';
+  const { match, pool, poolIdx, matchIdx, t3bracket, matchNum } = getSelectedMatch();
+
+  const label = (match.team1 || 'Équipe 1') + ' vs ' + (match.team2 || 'Équipe 2');
+  if (!confirm('Effacer le résultat de ' + label + ' ?')) return;
+
+  const btn = document.querySelectorAll('.btn-save')[1];
+  btn.textContent = '⏳ Suppression...';
+  btn.disabled = true;
+
+  try {
+    const pname = tour === 't3' ? t3bracket : pool.pool_name;
+    const midx = tour === 't3' ? matchNum : matchIdx;
+    await deleteScoreFromDB(gKey, tour, pname, midx);
+
+    // Reset match
+    match.score1 = null; match.score2 = null; match.winner = null;
+    if (tour !== 't3') recalcPool(pool);
+    renderAllPools();
+    renderT3();
+    updateMatchOptions();
+    document.getElementById('f-match').value = matchIdx;
+    document.getElementById('f-score1').value = '';
+    document.getElementById('f-score2').value = '';
+    document.getElementById('admin-deleted').classList.add('show');
+    setTimeout(() => document.getElementById('admin-deleted').classList.remove('show'), 3000);
+  } catch(e) {
+    alert('Erreur lors de la suppression.');
+  } finally {
+    btn.textContent = '🗑 Effacer ce résultat';
+    btn.disabled = false;
+  }
+}
+
+// ======================== INIT ========================
+
+// ======================== QUALIFICATION AUTO ========================
+// Rules: after saving a finale match score, propagate winners/losers
+const QUALIFICATION_RULES_M = {
+  0: { winner: { arr:'final_m', idx:20, team:'team1' }, loser: { arr:'final_m', idx:24, team:'team1' } },
+  1: { winner: { arr:'final_m', idx:21, team:'team1' }, loser: { arr:'final_m', idx:25, team:'team1' } },
+  2: { winner: { arr:'final_m', idx:20, team:'team2' }, loser: { arr:'final_m', idx:24, team:'team2' } },
+  3: { winner: { arr:'final_m', idx:21, team:'team2' }, loser: { arr:'final_m', idx:25, team:'team2' } },
+  4: { winner: { arr:'final_m', idx:22, team:'team1' }, loser: { arr:'final_m', idx:26, team:'team1' } },
+  5: { winner: { arr:'final_m', idx:23, team:'team1' }, loser: { arr:'final_m', idx:27, team:'team1' } },
+  6: { winner: { arr:'final_m', idx:22, team:'team2' }, loser: { arr:'final_m', idx:26, team:'team2' } },
+  7: { winner: { arr:'final_m', idx:23, team:'team2' }, loser: { arr:'final_m', idx:27, team:'team2' } },
+  8: { winner: { arr:'final_m', idx:28, team:'team1' }, loser: { arr:'final_m', idx:30, team:'team1' } },
+  9: { winner: { arr:'final_m', idx:28, team:'team2' }, loser: { arr:'final_m', idx:30, team:'team2' } },
+  10: { winner: { arr:'final_m', idx:29, team:'team1' }, loser: { arr:'final_m', idx:31, team:'team1' } },
+  11: { winner: { arr:'final_m', idx:29, team:'team2' }, loser: { arr:'final_m', idx:31, team:'team2' } },
+  12: { winner: { arr:'final_m', idx:49, team:'team1' }, loser: { arr:'final_m', idx:46, team:'team1' } },
+  13: { winner: { arr:'final_m', idx:49, team:'team2' }, loser: { arr:'final_m', idx:46, team:'team2' } },
+  14: { winner: { arr:'final_m', idx:45, team:'team1' }, loser: { arr:'final_m', idx:44, team:'team1' } },
+  15: { winner: { arr:'final_m', idx:45, team:'team2' }, loser: { arr:'final_m', idx:44, team:'team2' } },
+  16: { winner: { arr:'final_m', idx:43, team:'team1' }, loser: { arr:'final_m', idx:42, team:'team1' } },
+  17: { winner: { arr:'final_m', idx:43, team:'team2' }, loser: { arr:'final_m', idx:42, team:'team2' } },
+  18: { winner: { arr:'final_m', idx:41, team:'team1' }, loser: { arr:'final_m', idx:40, team:'team1' } },
+  19: { winner: { arr:'final_m', idx:41, team:'team2' }, loser: { arr:'final_m', idx:40, team:'team2' } },
+  20: { winner: { arr:'final_m', idx:32, team:'team1' }, loser: { arr:'final_m', idx:36, team:'team1' } },
+  21: { winner: { arr:'final_m', idx:33, team:'team1' }, loser: { arr:'final_m', idx:37, team:'team1' } },
+  22: { winner: { arr:'final_m', idx:32, team:'team2' }, loser: { arr:'final_m', idx:36, team:'team2' } },
+  23: { winner: { arr:'final_m', idx:33, team:'team2' }, loser: { arr:'final_m', idx:37, team:'team2' } },
+  24: { winner: { arr:'final_m', idx:36, team:'team1' }, loser: { arr:'final_m', idx:38, team:'team1' } },
+  25: { winner: { arr:'final_m', idx:37, team:'team1' }, loser: { arr:'final_m', idx:38, team:'team2' } },
+  26: { winner: { arr:'final_m', idx:36, team:'team2' }, loser: { arr:'final_m', idx:39, team:'team1' } },
+  27: { winner: { arr:'final_m', idx:37, team:'team2' }, loser: { arr:'final_m', idx:39, team:'team2' } },
+  28: { winner: { arr:'final_m', idx:51, team:'team1' }, loser: { arr:'final_m', idx:50, team:'team1' } },
+  29: { winner: { arr:'final_m', idx:51, team:'team2' }, loser: { arr:'final_m', idx:50, team:'team2' } },
+  30: { winner: { arr:'final_m', idx:49, team:'team1' }, loser: { arr:'final_m', idx:48, team:'team1' } },
+  31: { winner: { arr:'final_m', idx:49, team:'team2' }, loser: { arr:'final_m', idx:48, team:'team2' } },
+  32: { winner: { arr:'final_m', idx:59, team:'team1' }, loser: { arr:'final_m', idx:58, team:'team1' } },
+  33: { winner: { arr:'final_m', idx:59, team:'team2' }, loser: { arr:'final_m', idx:58, team:'team2' } },
+  34: { winner: { arr:'final_m', idx:57, team:'team1' }, loser: { arr:'final_m', idx:56, team:'team1' } },
+  35: { winner: { arr:'final_m', idx:57, team:'team2' }, loser: { arr:'final_m', idx:56, team:'team2' } },
+  36: { winner: { arr:'final_m', idx:55, team:'team1' }, loser: { arr:'final_m', idx:54, team:'team1' } },
+  37: { winner: { arr:'final_m', idx:55, team:'team2' }, loser: { arr:'final_m', idx:54, team:'team2' } },
+  38: { winner: { arr:'final_m', idx:53, team:'team1' }, loser: { arr:'final_m', idx:52, team:'team1' } },
+  39: { winner: { arr:'final_m', idx:53, team:'team2' }, loser: { arr:'final_m', idx:52, team:'team2' } }
+};
+
+const QUALIFICATION_RULES_F = {
+  0: { winner: { arr:'final_f', idx:20, team:'team1' }, loser: { arr:'final_f', idx:24, team:'team1' } },
+  1: { winner: { arr:'final_f', idx:21, team:'team1' }, loser: { arr:'final_f', idx:25, team:'team1' } },
+  2: { winner: { arr:'final_f', idx:20, team:'team2' }, loser: { arr:'final_f', idx:24, team:'team2' } },
+  3: { winner: { arr:'final_f', idx:21, team:'team2' }, loser: { arr:'final_f', idx:25, team:'team2' } },
+  4: { winner: { arr:'final_f', idx:22, team:'team1' }, loser: { arr:'final_f', idx:26, team:'team1' } },
+  5: { winner: { arr:'final_f', idx:23, team:'team1' }, loser: { arr:'final_f', idx:27, team:'team1' } },
+  6: { winner: { arr:'final_f', idx:22, team:'team2' }, loser: { arr:'final_f', idx:26, team:'team2' } },
+  7: { winner: { arr:'final_f', idx:23, team:'team2' }, loser: { arr:'final_f', idx:27, team:'team2' } },
+  8: { winner: { arr:'final_f', idx:28, team:'team1' }, loser: { arr:'final_f', idx:30, team:'team1' } },
+  9: { winner: { arr:'final_f', idx:28, team:'team2' }, loser: { arr:'final_f', idx:30, team:'team2' } },
+  10: { winner: { arr:'final_f', idx:29, team:'team1' }, loser: { arr:'final_f', idx:31, team:'team1' } },
+  11: { winner: { arr:'final_f', idx:29, team:'team2' }, loser: { arr:'final_f', idx:31, team:'team2' } },
+  12: { winner: { arr:'final_f', idx:49, team:'team1' }, loser: { arr:'final_f', idx:46, team:'team1' } },
+  13: { winner: { arr:'final_f', idx:49, team:'team2' }, loser: { arr:'final_f', idx:46, team:'team2' } },
+  14: { winner: { arr:'final_f', idx:45, team:'team1' }, loser: { arr:'final_f', idx:44, team:'team1' } },
+  15: { winner: { arr:'final_f', idx:45, team:'team2' }, loser: { arr:'final_f', idx:44, team:'team2' } },
+  16: { winner: { arr:'final_f', idx:43, team:'team1' }, loser: { arr:'final_f', idx:42, team:'team1' } },
+  17: { winner: { arr:'final_f', idx:43, team:'team2' }, loser: { arr:'final_f', idx:42, team:'team2' } },
+  18: { winner: { arr:'final_f', idx:41, team:'team1' }, loser: { arr:'final_f', idx:40, team:'team1' } },
+  19: { winner: { arr:'final_f', idx:41, team:'team2' }, loser: { arr:'final_f', idx:40, team:'team2' } },
+  20: { winner: { arr:'final_f', idx:32, team:'team1' }, loser: { arr:'final_f', idx:36, team:'team1' } },
+  21: { winner: { arr:'final_f', idx:33, team:'team1' }, loser: { arr:'final_f', idx:37, team:'team1' } },
+  22: { winner: { arr:'final_f', idx:32, team:'team2' }, loser: { arr:'final_f', idx:36, team:'team2' } },
+  23: { winner: { arr:'final_f', idx:33, team:'team2' }, loser: { arr:'final_f', idx:37, team:'team2' } },
+  24: { winner: { arr:'final_f', idx:36, team:'team1' }, loser: { arr:'final_f', idx:38, team:'team1' } },
+  25: { winner: { arr:'final_f', idx:37, team:'team1' }, loser: { arr:'final_f', idx:38, team:'team2' } },
+  26: { winner: { arr:'final_f', idx:36, team:'team2' }, loser: { arr:'final_f', idx:39, team:'team1' } },
+  27: { winner: { arr:'final_f', idx:37, team:'team2' }, loser: { arr:'final_f', idx:39, team:'team2' } },
+  28: { winner: { arr:'final_f', idx:51, team:'team1' }, loser: { arr:'final_f', idx:50, team:'team1' } },
+  29: { winner: { arr:'final_f', idx:51, team:'team2' }, loser: { arr:'final_f', idx:50, team:'team2' } },
+  30: { winner: { arr:'final_f', idx:49, team:'team1' }, loser: { arr:'final_f', idx:48, team:'team1' } },
+  31: { winner: { arr:'final_f', idx:49, team:'team2' }, loser: { arr:'final_f', idx:48, team:'team2' } },
+  32: { winner: { arr:'final_f', idx:59, team:'team1' }, loser: { arr:'final_f', idx:58, team:'team1' } },
+  33: { winner: { arr:'final_f', idx:59, team:'team2' }, loser: { arr:'final_f', idx:58, team:'team2' } },
+  34: { winner: { arr:'final_f', idx:57, team:'team1' }, loser: { arr:'final_f', idx:56, team:'team1' } },
+  35: { winner: { arr:'final_f', idx:57, team:'team2' }, loser: { arr:'final_f', idx:56, team:'team2' } },
+  36: { winner: { arr:'final_f', idx:55, team:'team1' }, loser: { arr:'final_f', idx:54, team:'team1' } },
+  37: { winner: { arr:'final_f', idx:55, team:'team2' }, loser: { arr:'final_f', idx:54, team:'team2' } },
+  38: { winner: { arr:'final_f', idx:53, team:'team1' }, loser: { arr:'final_f', idx:52, team:'team1' } },
+  39: { winner: { arr:'final_f', idx:53, team:'team2' }, loser: { arr:'final_f', idx:52, team:'team2' } }
+};;
+
+function propagateQualification(gender, matchIdx) {
+  const rules = gender === 'masculine' ? QUALIFICATION_RULES_M : QUALIFICATION_RULES_F;
+  const rule = rules[matchIdx];
+  if (!rule) return;
+
+  const srcMatches = gender === 'masculine' ? DATA.final_m : DATA.final_f;
+  const srcMatch = srcMatches[matchIdx];
+  if (!srcMatch || !srcMatch.winner) return;
+
+  const winner = srcMatch.winner;
+  const loser = srcMatch.team1 === winner ? srcMatch.team2 : srcMatch.team1;
+
+  function applyTo(dest, team) {
+    const arr = dest.arr === 'final_m' ? DATA.final_m : DATA.final_f;
+    if (arr[dest.idx]) arr[dest.idx][dest.team] = team;
+  }
+
+  applyTo(rule.winner, winner);
+  applyTo(rule.loser, loser);
+}
+
+async function saveQualification(gender, matchIdx) {
+  // Save updated team names to DB for the downstream matches
+  const rules = gender === 'masculine' ? QUALIFICATION_RULES_M : QUALIFICATION_RULES_F;
+  const rule = rules[matchIdx];
+  if (!rule) return;
+
+  for (const [type, dest] of [['winner', rule.winner], ['loser', rule.loser]]) {
+    const arr = dest.arr === 'final_m' ? DATA.final_m : DATA.final_f;
+    const m = arr[dest.idx];
+    if (!m) continue;
+    const gKey = dest.arr === 'final_m' ? 'masculine' : 'feminine';
+    try {
+      await saveScoreToDB({
+        gender: gKey, tour: 'finale', pool_name: 'finale',
+        match_idx: dest.idx, score1: m.score1 || 0, score2: m.score2 || 0,
+        team1: m.team1 || '', team2: m.team2 || ''
+      });
+    } catch(e) { console.error('Could not save qualification:', e); }
+  }
+}
+
+async function init() {
+  // Show loading state
+  document.querySelectorAll('.pools-grid').forEach(g => {
+    g.innerHTML = '<div style="padding:30px;text-align:center;color:var(--text-muted);grid-column:1/-1">⏳ Chargement des résultats...</div>';
+  });
+
+  // Load scores from Supabase
+  try {
+    const scores = await loadScoresFromDB();
+    DATA = freshData();
+    if (scores.length > 0) applyScores(DATA, scores);
+  } catch(e) {
+    console.error('Could not load scores from DB:', e);
+  }
+
+  renderAllPools();
+  renderClassement();
+  renderFinales();
+  renderT3();
+
+  // Setup admin form listeners
+  document.getElementById('f-gender').addEventListener('change', updateTourOptions);
+  document.getElementById('f-tour').addEventListener('change', updatePoolOptions);
+  document.getElementById('f-pool').addEventListener('change', updateMatchOptions);
+  document.getElementById('f-match').addEventListener('change', updateScoreDisplay);
+
+  // Auto-refresh every 30 seconds for spectators
+  setInterval(async () => {
+    if (adminLoggedIn) return; // don't refresh if admin is working
+    try {
+      const scores = await loadScoresFromDB();
+      DATA = freshData();
+      if (scores.length > 0) applyScores(DATA, scores);
+      renderAllPools();
+      renderClassement();
+      renderFinales();
+      renderT3();
+    } catch(e) { /* silent fail */ }
+  }, 30000);
+}
+init();
+</script>
+</body>
+</html>
