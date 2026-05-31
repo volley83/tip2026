@@ -890,7 +890,12 @@ function updateMatchOptions() {
 
   if (tour === 'finale') {
     const matches = gender === 'm' ? DATA.final_m : DATA.final_f;
-    sel.innerHTML = matches.map((m,i) => `<option value="${i}">Match ${m.match} · ${m.team1} vs ${m.team2}${m.winner?' ✓':''}</option>`).join('');
+    sel.innerHTML = matches.map((m,i) => {
+      const displayNum = m.match > 100 ? m.match - 100 : m.match;
+      const t1 = m.team1 || 'À déterminer';
+      const t2 = m.team2 || 'À déterminer';
+      return `<option value="${i}">Match ${displayNum} · ${t1} vs ${t2}${m.winner?' ✓':''}`;
+    }).join('');
   } else {
     const poolIdx = parseInt(poolVal);
     const pools = DATA[gender === 'm' ? 'masculine' : 'feminine'][tour + '_pools'];
@@ -1080,10 +1085,10 @@ const QUALIFICATION_RULES_F = {
   17: { winner: { arr:'final_f', idx:43, team:'team2' }, loser: { arr:'final_f', idx:42, team:'team2' } },
   18: { winner: { arr:'final_f', idx:41, team:'team1' }, loser: { arr:'final_f', idx:40, team:'team1' } },
   19: { winner: { arr:'final_f', idx:41, team:'team2' }, loser: { arr:'final_f', idx:40, team:'team2' } },
-  20: { winner: { arr:'final_f', idx:32, team:'team1' }, loser: { arr:'final_f', idx:36, team:'team1' } },
-  21: { winner: { arr:'final_f', idx:32, team:'team2' }, loser: { arr:'final_f', idx:36, team:'team2' } },
-  22: { winner: { arr:'final_f', idx:33, team:'team1' }, loser: { arr:'final_f', idx:37, team:'team1' } },
-  23: { winner: { arr:'final_f', idx:33, team:'team2' }, loser: { arr:'final_f', idx:37, team:'team2' } },
+  20: { winner: { arr:'final_f', idx:32, team:'team1' }, loser: { arr:'final_f', idx:34, team:'team1' } },
+  21: { winner: { arr:'final_f', idx:32, team:'team2' }, loser: { arr:'final_f', idx:34, team:'team2' } },
+  22: { winner: { arr:'final_f', idx:33, team:'team1' }, loser: { arr:'final_f', idx:35, team:'team1' } },
+  23: { winner: { arr:'final_f', idx:33, team:'team2' }, loser: { arr:'final_f', idx:35, team:'team2' } },
   24: { winner: { arr:'final_f', idx:36, team:'team1' }, loser: { arr:'final_f', idx:38, team:'team1' } },
   25: { winner: { arr:'final_f', idx:36, team:'team2' }, loser: { arr:'final_f', idx:38, team:'team2' } },
   26: { winner: { arr:'final_f', idx:37, team:'team1' }, loser: { arr:'final_f', idx:39, team:'team1' } },
