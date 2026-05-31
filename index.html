@@ -474,18 +474,23 @@ function applyScores(data, scores) {
   });
   recalcAllStandings(data);
   // Propagate qualifications from already-scored matches
-  if (typeof QUALIFICATION_RULES_M !== 'undefined' && data.final_m) {
-    data.final_m.forEach((m, idx) => {
+  function applyQualifRules(matches, rules, final_m, final_f) {
+    if (!rules || !matches) return;
+    matches.forEach((m, idx) => {
       if (!m.winner) return;
-      const rule = QUALIFICATION_RULES_M[idx];
+      const rule = rules[idx];
       if (!rule) return;
       const winner = m.winner;
       const loser = m.team1 === winner ? m.team2 : m.team1;
-      const wArr = rule.winner.arr === 'final_m' ? data.final_m : data.final_f;
-      const lArr = rule.loser.arr === 'final_m' ? data.final_m : data.final_f;
+      const wArr = rule.winner.arr === 'final_m' ? final_m : final_f;
+      const lArr = rule.loser.arr === 'final_m' ? final_m : final_f;
       if (wArr[rule.winner.idx]) wArr[rule.winner.idx][rule.winner.team] = winner;
       if (lArr[rule.loser.idx]) lArr[rule.loser.idx][rule.loser.team] = loser;
     });
+  }
+  if (typeof QUALIFICATION_RULES_M !== 'undefined') {
+    applyQualifRules(data.final_m, QUALIFICATION_RULES_M, data.final_m, data.final_f);
+    applyQualifRules(data.final_f, QUALIFICATION_RULES_F, data.final_m, data.final_f);
   }
 }
 
