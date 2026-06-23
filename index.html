@@ -166,16 +166,24 @@
   .search-bar input::placeholder { color: var(--text-muted); }
 
   @media (max-width: 768px) { .pools-grid { grid-template-columns: 1fr; } .bracket-grid { grid-template-columns: 1fr; } .form-row { grid-template-columns: 1fr; } }
-  .bracket-compact-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 14px; }
+  .bracket-compact-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 14px; }
   .bracket-compact-cell { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
   .bracket-title-compact { font-size: 11px; padding: 8px 10px; letter-spacing: 1px; }
   .bracket-compact-cell .bracket-match { padding: 10px 12px; }
   .bracket-compact-cell .bracket-match-num { font-size: 9px; margin-bottom: 6px; }
   .bracket-compact-cell .bracket-team { padding: 5px 8px; font-size: 12px; margin-bottom: 3px; }
   .bracket-compact-cell .bracket-team-score { font-size: 15px; }
-  @media (max-width: 1100px) { .bracket-compact-grid { grid-template-columns: repeat(3, 1fr); } }
-  @media (max-width: 700px) { .bracket-compact-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 480px) { .bracket-compact-grid { grid-template-columns: 1fr; } }
+  .bracket-compact-cell.places34-cell { margin-left: auto; width: 100%; background: linear-gradient(135deg, rgba(205,127,50,0.18), rgba(205,127,50,0.06)); border-color: rgba(205,127,50,0.4); }
+  .bracket-compact-cell.places34-cell .bracket-title-compact { background: var(--bronze); color: #fff; }
+  .bracket-finale-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 14px; justify-content: center; }
+  .bracket-finale-row .bracket-compact-cell { grid-column: 2 / 4; transform: scale(1.12); transform-origin: center; }
+  .bracket-finale-row .bracket-compact-cell .bracket-title-compact { background: var(--accent); color: var(--navy); font-weight: 700; font-size: 13px; padding: 10px 14px; }
+  .bracket-finale-row .bracket-compact-cell .bracket-match { padding: 14px 16px; }
+  .bracket-finale-row .bracket-compact-cell .bracket-team { font-size: 14px; padding: 7px 10px; }
+  .bracket-finale-row .bracket-compact-cell .bracket-team-score { font-size: 18px; }
+  @media (max-width: 1100px) { .bracket-compact-grid { grid-template-columns: repeat(3, 1fr); } .bracket-finale-row { grid-template-columns: repeat(3, 1fr); } .bracket-finale-row .bracket-compact-cell { grid-column: 2; } }
+  @media (max-width: 700px) { .bracket-compact-grid { grid-template-columns: repeat(2, 1fr); } .bracket-finale-row { grid-template-columns: repeat(2, 1fr); } .bracket-finale-row .bracket-compact-cell { grid-column: 1 / 3; transform: scale(1.06); } }
+  @media (max-width: 480px) { .bracket-compact-grid { grid-template-columns: 1fr; } .bracket-finale-row { grid-template-columns: 1fr; } .bracket-finale-row .bracket-compact-cell { grid-column: 1; transform: none; } }
   footer { background: var(--surface); border-top: 1px solid var(--border); padding: 20px; text-align: center; font-size: 12px; color: var(--text-muted); }
   footer a { color: var(--blue-light); text-decoration: none; }
 </style>
@@ -791,14 +799,14 @@ function renderFinales() {
       'Places 15 / 16','Places 13 / 14','Places 11 / 12','Places 9 / 10',
       'Places 7 / 8','Places 5 / 6','Places 3 / 4','FINALE'
     ];
-    // Phases from "Places 39/40" through "FINALE" are single 1v1 placement matches
-    // Group them 5 per row for a more compact display
+    // Phases from "Places 39/40" through "Places 3/4" are single 1v1 placement matches
+    // Group them 4 per row for a more compact display. FINALE is rendered alone afterwards.
     const compactPhases = new Set([
       'Places 39 / 40','Places 37 / 38','Places 35 / 36','Places 33 / 34',
       'Places 31 / 32','Places 29 / 30','Places 27 / 28','Places 25 / 26',
       'Places 23 / 24','Places 21 / 22','Places 19 / 20','Places 17 / 18',
       'Places 15 / 16','Places 13 / 14','Places 11 / 12','Places 9 / 10',
-      'Places 7 / 8','Places 5 / 6','Places 3 / 4','FINALE'
+      'Places 7 / 8','Places 5 / 6','Places 3 / 4'
     ]);
 
     function buildMatchCard(m) {
@@ -821,14 +829,16 @@ function renderFinales() {
 
     let html = '';
     const seen = new Set();
-    let compactBuffer = []; // { phase, matchHtml }
+    let compactBuffer = []; // { phase, matchHtml, isPlaces34 }
 
-    function flushCompactBuffer() {
+    function flushCompactBuffer(forcePlaces34Alone) {
       if (compactBuffer.length === 0) return;
-      // Render 5 per row, each cell keeping its own phase title above the match
+      // Render 4 per row, each cell keeping its own phase title above the match
+      // Places 3/4 always renders alone, pushed to the right of its row
       html += '<div class="bracket-compact-grid">';
       compactBuffer.forEach(item => {
-        html += `<div class="bracket-compact-cell"><div class="bracket-title bracket-title-compact">${item.phase}</div>${item.matchHtml}</div>`;
+        const cellClass = item.isPlaces34 ? 'bracket-compact-cell places34-cell' : 'bracket-compact-cell';
+        html += `<div class="${cellClass}"><div class="bracket-title bracket-title-compact">${item.phase}</div>${item.matchHtml}</div>`;
       });
       html += '</div>';
       compactBuffer = [];
@@ -839,11 +849,25 @@ function renderFinales() {
       seen.add(phase);
       const displayPhase = phase.replace('Places 17  à 24','Places 17 à 24').replace('1/4 de Finales','1/4 de Finales');
 
-      if (compactPhases.has(phase)) {
-        // Compact single-match phase: buffer it for the 5-per-row layout
+      if (phase === 'FINALE') {
+        // Flush any pending compact matches, then render the FINALE alone on its own row
+        flushCompactBuffer();
+        html += `<div class="bracket-finale-row">`;
         groups[phase].forEach(m => {
-          compactBuffer.push({ phase: displayPhase, matchHtml: buildMatchCard(m) });
+          html += `<div class="bracket-compact-cell"><div class="bracket-title bracket-title-compact">${displayPhase}</div>${buildMatchCard(m)}</div>`;
         });
+        html += `</div>`;
+        return;
+      }
+
+      if (compactPhases.has(phase)) {
+        // Compact single-match phase: buffer it for the 4-per-row layout.
+        // "Places 3 / 4" is pushed to the end of its row of 4, slightly offset.
+        groups[phase].forEach(m => {
+          compactBuffer.push({ phase: displayPhase, matchHtml: buildMatchCard(m), isPlaces34: phase === 'Places 3 / 4' });
+        });
+        // Flush every 4 items so each row holds exactly 4 matches
+        if (compactBuffer.length >= 4) flushCompactBuffer();
         return;
       }
 
