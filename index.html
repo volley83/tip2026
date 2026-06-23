@@ -718,18 +718,43 @@ function renderAllPools() {
 }
 
 // ======================== CLASSEMENT ========================
+// Map "Places X / Y" phase labels to [higherRank, lowerRank]
+function parsePlacesRange(phase) {
+  const m = phase.match(/Places?\s+(\d+)\s*\/\s*(\d+)/);
+  if (!m) return null;
+  return [parseInt(m[1]), parseInt(m[2])];
+}
+
+function computeFinalRanking(matches) {
+  // Only matches 41-60 (or 141-160 for F) are 1v1 placement finals (2 ranked places each)
+  const ranking = [];
+  matches.forEach(m => {
+    const range = parsePlacesRange(m.phase);
+    if (!range) return; // skip group-stage phases (1/8e, QF, places X à Y groups, etc.)
+    if (!m.winner) return; // not played yet
+    const [higher, lower] = range;
+    const loser = m.team1 === m.winner ? m.team2 : m.team1;
+    ranking.push({ rank: higher, team: m.winner });
+    ranking.push({ rank: lower, team: loser });
+  });
+  ranking.sort((a,b) => a.rank - b.rank);
+  return ranking;
+}
+
 function renderClassement() {
   const medals = ['🥇','🥈','🥉'];
   function buildTable(entries) {
-    if (!entries || entries.length === 0) return '<div class="empty-state"><div class="empty-icon">⏳</div>En attente de la fin du tournoi</div>';
+    if (!entries || entries.length === 0) return '<div class="empty-state"><div class="empty-icon">⏳</div>En attente des résultats de la phase finale</div>';
     let html = '<table class="rank-table"><tbody>';
-    entries.forEach((e,i) => {
-      html += `<tr><td class="rank-num">${medals[i]||e.rank}</td><td style="font-weight:500">${e.team}</td></tr>`;
+    entries.forEach((e) => {
+      html += `<tr><td class="rank-num">${medals[e.rank-1]||e.rank}</td><td style="font-weight:500">${e.team}</td></tr>`;
     });
     return html + '</tbody></table>';
   }
-  document.getElementById('rank-masc-content').innerHTML = buildTable(DATA.classement_m);
-  document.getElementById('rank-fem-content').innerHTML = buildTable(DATA.classement_f);
+  const rankingM = computeFinalRanking(DATA.final_m);
+  const rankingF = computeFinalRanking(DATA.final_f);
+  document.getElementById('rank-masc-content').innerHTML = buildTable(rankingM);
+  document.getElementById('rank-fem-content').innerHTML = buildTable(rankingF);
 }
 
 // ======================== FINALES ========================
@@ -967,6 +992,7 @@ async function saveScore() {
     // Re-render
     renderAllPools();
     renderFinales();
+    renderClassement();
     document.getElementById('admin-success').classList.add('show');
     setTimeout(() => document.getElementById('admin-success').classList.remove('show'), 3000);
     updateMatchOptions();
@@ -1042,10 +1068,10 @@ const QUALIFICATION_RULES_M = {
   17: { winner: { arr:'final_m', idx:43, team:'team2' }, loser: { arr:'final_m', idx:42, team:'team2' } },
   18: { winner: { arr:'final_m', idx:41, team:'team1' }, loser: { arr:'final_m', idx:40, team:'team1' } },
   19: { winner: { arr:'final_m', idx:41, team:'team2' }, loser: { arr:'final_m', idx:40, team:'team2' } },
-  20: { winner: { arr:'final_m', idx:32, team:'team1' }, loser: { arr:'final_m', idx:36, team:'team1' } },
-  21: { winner: { arr:'final_m', idx:32, team:'team2' }, loser: { arr:'final_m', idx:36, team:'team2' } },
-  22: { winner: { arr:'final_m', idx:33, team:'team1' }, loser: { arr:'final_m', idx:37, team:'team1' } },
-  23: { winner: { arr:'final_m', idx:33, team:'team2' }, loser: { arr:'final_m', idx:37, team:'team2' } },
+  20: { winner: { arr:'final_m', idx:32, team:'team1' }, loser: { arr:'final_m', idx:34, team:'team1' } },
+  21: { winner: { arr:'final_m', idx:32, team:'team2' }, loser: { arr:'final_m', idx:34, team:'team2' } },
+  22: { winner: { arr:'final_m', idx:33, team:'team1' }, loser: { arr:'final_m', idx:35, team:'team1' } },
+  23: { winner: { arr:'final_m', idx:33, team:'team2' }, loser: { arr:'final_m', idx:35, team:'team2' } },
   24: { winner: { arr:'final_m', idx:36, team:'team1' }, loser: { arr:'final_m', idx:38, team:'team1' } },
   25: { winner: { arr:'final_m', idx:36, team:'team2' }, loser: { arr:'final_m', idx:38, team:'team2' } },
   26: { winner: { arr:'final_m', idx:37, team:'team1' }, loser: { arr:'final_m', idx:39, team:'team1' } },
