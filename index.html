@@ -166,6 +166,16 @@
   .search-bar input::placeholder { color: var(--text-muted); }
 
   @media (max-width: 768px) { .pools-grid { grid-template-columns: 1fr; } .bracket-grid { grid-template-columns: 1fr; } .form-row { grid-template-columns: 1fr; } }
+  .bracket-compact-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 14px; }
+  .bracket-compact-cell { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .bracket-title-compact { font-size: 11px; padding: 8px 10px; letter-spacing: 1px; }
+  .bracket-compact-cell .bracket-match { padding: 10px 12px; }
+  .bracket-compact-cell .bracket-match-num { font-size: 9px; margin-bottom: 6px; }
+  .bracket-compact-cell .bracket-team { padding: 5px 8px; font-size: 12px; margin-bottom: 3px; }
+  .bracket-compact-cell .bracket-team-score { font-size: 15px; }
+  @media (max-width: 1100px) { .bracket-compact-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 700px) { .bracket-compact-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .bracket-compact-grid { grid-template-columns: 1fr; } }
   footer { background: var(--surface); border-top: 1px solid var(--border); padding: 20px; text-align: center; font-size: 12px; color: var(--text-muted); }
   footer a { color: var(--blue-light); text-decoration: none; }
 </style>
@@ -781,20 +791,22 @@ function renderFinales() {
       'Places 15 / 16','Places 13 / 14','Places 11 / 12','Places 9 / 10',
       'Places 7 / 8','Places 5 / 6','Places 3 / 4','FINALE'
     ];
-    let html = '';
-    const seen = new Set();
-    order.forEach(phase => {
-      if (!groups[phase] || seen.has(phase)) return;
-      seen.add(phase);
-      // Use canonical phase name
-      const displayPhase = phase.replace('Places 17  à 24','Places 17 à 24').replace('1/4 de Finales','1/4 de Finales');
-      html += `<div class="bracket-section"><div class="bracket-title">${displayPhase}</div><div class="bracket-grid">`;
-      groups[phase].forEach(m => {
-        const w1 = m.winner === m.team1, w2 = m.winner === m.team2;
-        const ADET = '<span style="color:var(--text-muted);font-style:italic;font-size:11px;">À déterminer</span>';
-        const t1 = m.team1 ? m.team1 : ADET;
-        const t2 = m.team2 ? m.team2 : ADET;
-        html += `<div class="bracket-match">
+    // Phases from "Places 39/40" through "FINALE" are single 1v1 placement matches
+    // Group them 5 per row for a more compact display
+    const compactPhases = new Set([
+      'Places 39 / 40','Places 37 / 38','Places 35 / 36','Places 33 / 34',
+      'Places 31 / 32','Places 29 / 30','Places 27 / 28','Places 25 / 26',
+      'Places 23 / 24','Places 21 / 22','Places 19 / 20','Places 17 / 18',
+      'Places 15 / 16','Places 13 / 14','Places 11 / 12','Places 9 / 10',
+      'Places 7 / 8','Places 5 / 6','Places 3 / 4','FINALE'
+    ]);
+
+    function buildMatchCard(m) {
+      const w1 = m.winner === m.team1, w2 = m.winner === m.team2;
+      const ADET = '<span style="color:var(--text-muted);font-style:italic;font-size:11px;">À déterminer</span>';
+      const t1 = m.team1 ? m.team1 : ADET;
+      const t2 = m.team2 ? m.team2 : ADET;
+      return `<div class="bracket-match">
           <div class="bracket-match-num">Match ${m.match > 100 ? m.match - 100 : m.match}</div>
           <div class="bracket-team ${w1?'winner'+(isM?'':' f'):''}">
             <span>${t1}</span>
@@ -805,9 +817,44 @@ function renderFinales() {
             ${m.score2!==null?`<span class="bracket-team-score">${m.score2}</span>`:''}
           </div>
         </div>`;
+    }
+
+    let html = '';
+    const seen = new Set();
+    let compactBuffer = []; // { phase, matchHtml }
+
+    function flushCompactBuffer() {
+      if (compactBuffer.length === 0) return;
+      // Render 5 per row, each cell keeping its own phase title above the match
+      html += '<div class="bracket-compact-grid">';
+      compactBuffer.forEach(item => {
+        html += `<div class="bracket-compact-cell"><div class="bracket-title bracket-title-compact">${item.phase}</div>${item.matchHtml}</div>`;
       });
+      html += '</div>';
+      compactBuffer = [];
+    }
+
+    order.forEach(phase => {
+      if (!groups[phase] || seen.has(phase)) return;
+      seen.add(phase);
+      const displayPhase = phase.replace('Places 17  à 24','Places 17 à 24').replace('1/4 de Finales','1/4 de Finales');
+
+      if (compactPhases.has(phase)) {
+        // Compact single-match phase: buffer it for the 5-per-row layout
+        groups[phase].forEach(m => {
+          compactBuffer.push({ phase: displayPhase, matchHtml: buildMatchCard(m) });
+        });
+        return;
+      }
+
+      // Non-compact phase: flush any pending compact matches first, then render normally
+      flushCompactBuffer();
+      html += `<div class="bracket-section"><div class="bracket-title">${displayPhase}</div><div class="bracket-grid">`;
+      groups[phase].forEach(m => { html += buildMatchCard(m); });
       html += '</div></div>';
     });
+    flushCompactBuffer();
+
     return html || '<div class="empty-state"><div class="empty-icon">⏳</div>Résultats à venir</div>';
   }
   document.getElementById('finals-masc-content').innerHTML = buildFinals(DATA.final_m, 'm');
