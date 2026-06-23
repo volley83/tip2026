@@ -459,7 +459,11 @@ async function loadScoresFromDB() {
 }
 
 async function saveScoreToDB(entry) {
-  await sbFetch('POST', 'scores', entry);
+  // IMPORTANT: Prefer: resolution=merge-duplicates only works as an upsert
+  // if Postgrest knows which columns define the conflict. Without on_conflict,
+  // it falls back to a plain INSERT and fails with a duplicate key error
+  // whenever a row already exists for this (gender, tour, pool_name, match_idx).
+  await sbFetch('POST', 'scores?on_conflict=gender,tour,pool_name,match_idx', entry);
 }
 
 async function deleteScoreFromDB(gender, tour, pool_name, match_idx) {
