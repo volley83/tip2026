@@ -139,6 +139,15 @@
   .rank-table { width: 100%; border-collapse: collapse; }
   .rank-table td { padding: 9px 16px; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 13px; }
   .rank-table tr:last-child td { border-bottom: none; }
+  .rank-podium { display: flex; flex-direction: column; border-bottom: 1px solid var(--border); }
+  .rank-podium-row { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .rank-podium-row:last-child { border-bottom: none; }
+  .rank-podium-row .rank-num { font-size: 20px; line-height: 1; flex-shrink: 0; width: 28px; text-align: center; }
+  .rank-podium-row .rank-team { font-size: 15px; font-weight: 700; }
+  .rank-rest-cols { display: grid; grid-template-columns: 1fr 1fr; }
+  .rank-rest-cols .rank-table { border-right: 1px solid rgba(255,255,255,0.04); }
+  .rank-rest-cols .rank-table:last-child { border-right: none; }
+  @media (max-width: 480px) { .rank-rest-cols { grid-template-columns: 1fr; } .rank-rest-cols .rank-table { border-right: none; } }
   .rank-num { font-family: 'Barlow Condensed',sans-serif; font-size: 17px; font-weight: 700; color: var(--text-muted); width: 36px; }
   .rank-table tr:nth-child(1) .rank-num { color: var(--gold); }
   .rank-table tr:nth-child(2) .rank-num { color: var(--silver); }
@@ -175,16 +184,16 @@
   .bracket-compact-cell .bracket-team-score { font-size: 15px; }
   .bracket-compact-cell.places34-cell { background: linear-gradient(135deg, rgba(205,127,50,0.18), rgba(205,127,50,0.06)); border-color: rgba(205,127,50,0.4); }
   .bracket-compact-cell.places34-cell .bracket-title-compact { background: var(--bronze); color: #fff; }
-  .bracket-places34-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 14px; justify-content: center; }
-  .bracket-places34-row .bracket-compact-cell { grid-column: 2 / 4; transform: scale(1.06); transform-origin: center; }
-  .bracket-finale-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 14px; justify-content: center; }
+  .bracket-places34-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 22px; margin-bottom: 22px; justify-content: center; }
+  .bracket-places34-row .bracket-compact-cell { grid-column: 2 / 4; transform: scale(0.92); transform-origin: center; }
+  .bracket-finale-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 8px; margin-bottom: 14px; justify-content: center; }
   .bracket-finale-row .bracket-compact-cell { grid-column: 2 / 4; transform: scale(1.12); transform-origin: center; }
   .bracket-finale-row .bracket-compact-cell .bracket-title-compact { background: var(--accent); color: var(--navy); font-weight: 700; font-size: 13px; padding: 10px 14px; }
   .bracket-finale-row .bracket-compact-cell .bracket-match { padding: 14px 16px; }
   .bracket-finale-row .bracket-compact-cell .bracket-team { font-size: 14px; padding: 7px 10px; }
   .bracket-finale-row .bracket-compact-cell .bracket-team-score { font-size: 18px; }
   @media (max-width: 1100px) { .bracket-compact-grid { grid-template-columns: repeat(3, 1fr); } .bracket-places34-row { grid-template-columns: repeat(3, 1fr); } .bracket-places34-row .bracket-compact-cell { grid-column: 2; } .bracket-finale-row { grid-template-columns: repeat(3, 1fr); } .bracket-finale-row .bracket-compact-cell { grid-column: 2; } }
-  @media (max-width: 700px) { .bracket-compact-grid { grid-template-columns: repeat(2, 1fr); } .bracket-places34-row { grid-template-columns: repeat(2, 1fr); } .bracket-places34-row .bracket-compact-cell { grid-column: 1 / 3; transform: scale(1.03); } .bracket-finale-row { grid-template-columns: repeat(2, 1fr); } .bracket-finale-row .bracket-compact-cell { grid-column: 1 / 3; transform: scale(1.06); } }
+  @media (max-width: 700px) { .bracket-compact-grid { grid-template-columns: repeat(2, 1fr); } .bracket-places34-row { grid-template-columns: repeat(2, 1fr); } .bracket-places34-row .bracket-compact-cell { grid-column: 1 / 3; transform: scale(0.95); } .bracket-finale-row { grid-template-columns: repeat(2, 1fr); } .bracket-finale-row .bracket-compact-cell { grid-column: 1 / 3; transform: scale(1.06); } }
   @media (max-width: 480px) { .bracket-compact-grid { grid-template-columns: 1fr; } .bracket-places34-row { grid-template-columns: 1fr; } .bracket-places34-row .bracket-compact-cell { grid-column: 1; transform: none; } .bracket-finale-row { grid-template-columns: 1fr; } .bracket-finale-row .bracket-compact-cell { grid-column: 1; transform: none; } }
   footer { background: var(--surface); border-top: 1px solid var(--border); padding: 20px; text-align: center; font-size: 12px; color: var(--text-muted); }
   footer a { color: var(--blue-light); text-decoration: none; }
@@ -752,7 +761,8 @@ function computeFinalRanking(matches) {
   // Only matches 41-60 (or 141-160 for F) are 1v1 placement finals (2 ranked places each)
   const ranking = [];
   matches.forEach(m => {
-    const range = parsePlacesRange(m.phase);
+    let range = parsePlacesRange(m.phase);
+    if (!range && m.phase === 'FINALE') range = [1, 2]; // the FINALE match decides ranks 1 and 2
     if (!range) return; // skip group-stage phases (1/8e, QF, places X à Y groups, etc.)
     if (!m.winner) return; // not played yet
     const [higher, lower] = range;
@@ -768,11 +778,37 @@ function renderClassement() {
   const medals = ['🥇','🥈','🥉'];
   function buildTable(entries) {
     if (!entries || entries.length === 0) return '<div class="empty-state"><div class="empty-icon">⏳</div>En attente des résultats de la phase finale</div>';
-    let html = '<table class="rank-table"><tbody>';
-    entries.forEach((e) => {
-      html += `<tr><td class="rank-num">${medals[e.rank-1]||e.rank}</td><td style="font-weight:500">${e.team}</td></tr>`;
-    });
-    return html + '</tbody></table>';
+
+    const podium = entries.filter(e => e.rank <= 3);
+    const rest = entries.filter(e => e.rank > 3);
+
+    let html = '';
+
+    if (podium.length > 0) {
+      html += '<div class="rank-podium">';
+      podium.forEach(e => {
+        html += `<div class="rank-podium-row"><span class="rank-num">${medals[e.rank-1]}</span><span class="rank-team">${e.team}</span></div>`;
+      });
+      html += '</div>';
+    }
+
+    if (rest.length > 0) {
+      // Split the remaining ranks into two columns: first half left, second half right
+      const mid = Math.ceil(rest.length / 2);
+      const left = rest.slice(0, mid);
+      const right = rest.slice(mid);
+      function col(list) {
+        if (list.length === 0) return '<table class="rank-table"><tbody></tbody></table>';
+        let t = '<table class="rank-table"><tbody>';
+        list.forEach(e => {
+          t += `<tr><td class="rank-num">${e.rank}</td><td style="font-weight:500">${e.team}</td></tr>`;
+        });
+        return t + '</tbody></table>';
+      }
+      html += `<div class="rank-rest-cols">${col(left)}${col(right)}</div>`;
+    }
+
+    return html;
   }
   const rankingM = computeFinalRanking(DATA.final_m);
   const rankingF = computeFinalRanking(DATA.final_f);
