@@ -440,7 +440,14 @@ async function sbFetch(method, path, body) {
     if (!res.ok) throw new Error('Supabase GET error ' + res.status);
     return res.json();
   }
-  // For POST/PATCH/DELETE, Supabase returns 200/201/204 - all acceptable
+  // For POST/PATCH/DELETE, verify the request actually succeeded.
+  // Without this check, a failed write (e.g. 400/403/409) would silently
+  // look like a success to the caller, while the score is never saved.
+  if (!res.ok) {
+    let detail = '';
+    try { detail = await res.text(); } catch(e) {}
+    throw new Error(`Supabase ${method} error ${res.status}: ${detail}`);
+  }
   return res;
 }
 
@@ -1118,8 +1125,10 @@ async function saveScore() {
     setTimeout(() => document.getElementById('admin-success').classList.remove('show'), 3000);
     updateMatchOptions();
     document.getElementById('f-match').value = matchIdx;
+    updateScoreDisplay();
   } catch(e) {
-    alert('Erreur lors de la sauvegarde. Vérifiez votre connexion.');
+    console.error('saveScore error:', e);
+    alert('Erreur lors de la sauvegarde : ' + (e && e.message ? e.message : 'erreur inconnue') + '\n\nLe score N\'A PAS été enregistré. Vérifiez votre connexion et réessayez.');
   } finally {
     btn.textContent = '💾 Enregistrer le score';
     btn.disabled = false;
@@ -1152,6 +1161,7 @@ async function deleteScore() {
     renderT3();
     updateMatchOptions();
     document.getElementById('f-match').value = matchIdx;
+    updateScoreDisplay();
     document.getElementById('f-score1').value = '';
     document.getElementById('f-score2').value = '';
     document.getElementById('admin-deleted').classList.add('show');
