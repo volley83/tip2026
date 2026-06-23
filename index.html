@@ -445,6 +445,9 @@ function applyScores(data, scores) {
       const matches = sc.gender === 'masculine' ? data.final_m : data.final_f;
       const match = matches[sc.match_idx];
       if (!match) return;
+      // Restore team names from DB (BASE_DATA may have them empty for qualification-dependent matches)
+      if (sc.team1) match.team1 = sc.team1;
+      if (sc.team2) match.team2 = sc.team2;
       match.score1 = sc.score1; match.score2 = sc.score2;
       match.winner = sc.score1 > sc.score2 ? match.team1 : (sc.score2 > sc.score1 ? match.team2 : null);
       return;
