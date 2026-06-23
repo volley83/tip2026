@@ -140,7 +140,7 @@
   .rank-table td { padding: 9px 16px; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 13px; }
   .rank-table tr:last-child td { border-bottom: none; }
   .rank-podium { display: flex; flex-direction: column; border-bottom: 1px solid var(--border); }
-  .rank-podium-row { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .rank-podium-row { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.04); text-align: center; }
   .rank-podium-row:last-child { border-bottom: none; }
   .rank-podium-row .rank-num { font-size: 20px; line-height: 1; flex-shrink: 0; width: 28px; text-align: center; }
   .rank-podium-row .rank-team { font-size: 15px; font-weight: 700; }
@@ -149,9 +149,6 @@
   .rank-rest-cols .rank-table:last-child { border-right: none; }
   @media (max-width: 480px) { .rank-rest-cols { grid-template-columns: 1fr; } .rank-rest-cols .rank-table { border-right: none; } }
   .rank-num { font-family: 'Barlow Condensed',sans-serif; font-size: 17px; font-weight: 700; color: var(--text-muted); width: 36px; }
-  .rank-table tr:nth-child(1) .rank-num { color: var(--gold); }
-  .rank-table tr:nth-child(2) .rank-num { color: var(--silver); }
-  .rank-table tr:nth-child(3) .rank-num { color: var(--bronze); }
   .empty-state { padding: 32px; text-align: center; color: var(--text-muted); font-size: 14px; }
   .empty-icon { font-size: 36px; margin-bottom: 8px; }
 
