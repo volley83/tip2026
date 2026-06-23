@@ -173,8 +173,10 @@
   .bracket-compact-cell .bracket-match-num { font-size: 9px; margin-bottom: 6px; }
   .bracket-compact-cell .bracket-team { padding: 5px 8px; font-size: 12px; margin-bottom: 3px; }
   .bracket-compact-cell .bracket-team-score { font-size: 15px; }
-  .bracket-compact-cell.places34-cell { background: linear-gradient(135deg, rgba(205,127,50,0.18), rgba(205,127,50,0.06)); border-color: rgba(205,127,50,0.4); position: relative; left: 50%; width: 150%; transform: translateX(-25%); }
+  .bracket-compact-cell.places34-cell { background: linear-gradient(135deg, rgba(205,127,50,0.18), rgba(205,127,50,0.06)); border-color: rgba(205,127,50,0.4); }
   .bracket-compact-cell.places34-cell .bracket-title-compact { background: var(--bronze); color: #fff; }
+  .bracket-compact-grid.row-of-3 { grid-template-columns: repeat(3, 1fr); }
+  .bracket-compact-grid.row-of-3 .bracket-compact-cell.places34-cell { transform: scale(1.22); transform-origin: center; }
   .bracket-finale-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 14px; justify-content: center; }
   .bracket-finale-row .bracket-compact-cell { grid-column: 2 / 4; transform: scale(1.12); transform-origin: center; }
   .bracket-finale-row .bracket-compact-cell .bracket-title-compact { background: var(--accent); color: var(--navy); font-weight: 700; font-size: 13px; padding: 10px 14px; }
@@ -834,8 +836,10 @@ function renderFinales() {
     function flushCompactBuffer(forcePlaces34Alone) {
       if (compactBuffer.length === 0) return;
       // Render 4 per row, each cell keeping its own phase title above the match
-      // Places 3/4 always renders alone, pushed to the right of its row
-      html += '<div class="bracket-compact-grid">';
+      // When the row holds exactly 3 matches (incl. Places 3/4), use a 3-col grid so it stays centered
+      const rowClass = (compactBuffer.length === 3 && compactBuffer.some(i => i.isPlaces34))
+        ? 'bracket-compact-grid row-of-3' : 'bracket-compact-grid';
+      html += `<div class="${rowClass}">`;
       compactBuffer.forEach(item => {
         const cellClass = item.isPlaces34 ? 'bracket-compact-cell places34-cell' : 'bracket-compact-cell';
         html += `<div class="${cellClass}"><div class="bracket-title bracket-title-compact">${item.phase}</div>${item.matchHtml}</div>`;
