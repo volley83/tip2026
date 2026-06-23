@@ -427,6 +427,7 @@ async function sbFetch(method, path, body) {
     'Content-Type': 'application/json',
   };
   if (method === 'POST') headers['Prefer'] = 'resolution=merge-duplicates,return=minimal';
+  if (method === 'PATCH') headers['Prefer'] = 'return=minimal';
   if (method === 'GET') headers['Prefer'] = 'return=representation';
 
   const res = await fetch(SUPABASE_URL + '/rest/v1/' + path, {
@@ -439,7 +440,7 @@ async function sbFetch(method, path, body) {
     if (!res.ok) throw new Error('Supabase GET error ' + res.status);
     return res.json();
   }
-  // For POST/DELETE, Supabase returns 200/201/204 - all acceptable
+  // For POST/PATCH/DELETE, Supabase returns 200/201/204 - all acceptable
   return res;
 }
 
@@ -1275,22 +1276,46 @@ function propagateQualification(gender, matchIdx) {
 }
 
 async function saveQualification(gender, matchIdx) {
-  // Save updated team names to DB for the downstream matches
+  // Save updated team names to DB for the downstream matches.
+  // CRITICAL: this must NEVER overwrite a real score that was already entered
+  // for the destination match. We only ever touch team1/team2 here.
   const rules = gender === 'masculine' ? QUALIFICATION_RULES_M : QUALIFICATION_RULES_F;
   const rule = rules[matchIdx];
   if (!rule) return;
 
-  for (const [type, dest] of [['winner', rule.winner], ['loser', rule.loser]]) {
+  const destinations = new Map(); // key: `${arr}-${idx}` -> { arr, idx }
+  for (const dest of [rule.winner, rule.loser]) {
+    const key = `${dest.arr}-${dest.idx}`;
+    if (!destinations.has(key)) destinations.set(key, { arr: dest.arr, idx: dest.idx });
+  }
+
+  for (const dest of destinations.values()) {
     const arr = dest.arr === 'final_m' ? DATA.final_m : DATA.final_f;
     const m = arr[dest.idx];
     if (!m) continue;
     const gKey = dest.arr === 'final_m' ? 'masculine' : 'feminine';
     try {
-      await saveScoreToDB({
-        gender: gKey, tour: 'finale', pool_name: 'finale',
-        match_idx: dest.idx, score1: m.score1 || 0, score2: m.score2 || 0,
-        team1: m.team1 || '', team2: m.team2 || ''
-      });
+      // Check if a row already exists in the DB for this destination match
+      const existing = await sbFetch(
+        'GET',
+        `scores?select=score1,score2&gender=eq.${gKey}&tour=eq.finale&pool_name=eq.finale&match_idx=eq.${dest.idx}`
+      );
+      if (Array.isArray(existing) && existing.length > 0) {
+        // Row already exists: only update team1/team2, NEVER touch score1/score2
+        // (the destination match may already have its own real score saved by the admin)
+        await sbFetch(
+          'PATCH',
+          `scores?gender=eq.${gKey}&tour=eq.finale&pool_name=eq.finale&match_idx=eq.${dest.idx}`,
+          { team1: m.team1 || '', team2: m.team2 || '' }
+        );
+      } else {
+        // No row yet: create it with score 0/0 (match not played) and the known team names
+        await saveScoreToDB({
+          gender: gKey, tour: 'finale', pool_name: 'finale',
+          match_idx: dest.idx, score1: 0, score2: 0,
+          team1: m.team1 || '', team2: m.team2 || ''
+        });
+      }
     } catch(e) { console.error('Could not save qualification:', e); }
   }
 }
